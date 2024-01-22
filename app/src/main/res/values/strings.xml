@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">EyeImprove</string>
+    <string name="humidify">Влажность:</string>
+    <string name="temperatureValue">0</string>
+    <string name="temperature">Температура:</string>
+    <string name="humidifyValue">0</string>
+    <string name="bluetooth_device_text">Bluetooth Device: %1$s</string>
+    <string name="device_info_text">Info: %1$s</string>
+</resources>
