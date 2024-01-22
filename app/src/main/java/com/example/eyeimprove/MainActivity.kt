@@ -4,7 +4,6 @@ import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
-import android.bluetooth.BluetoothProfile
 import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,29 +15,28 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.os.postDelayed
 import java.lang.reflect.Method
 import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
+    private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
+    private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
+    private val REQUEST_ENABLE_BT = 1
+
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private lateinit var bluetoothManager: BluetoothManager
-    private lateinit var bluetoothDevice: BluetoothDevice
     private lateinit var bluetoothSocket: BluetoothSocket
     private lateinit var handler: Handler
     private lateinit var textView: TextView
     private lateinit var bluetoothDeviceText: TextView
     private lateinit var bluetootInfoText: TextView
-    private lateinit var WELL_KNOWN_UUID : UUID
-    private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
-    private val REQUEST_ENABLE_BT = 1
+    private var connectedDevices: MutableList<BluetoothDevice> = mutableListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        WELL_KNOWN_UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
 
         bluetoothDeviceText = findViewById(R.id.bluetoothDevice)
         bluetootInfoText = findViewById(R.id.bluetoothInfo)
@@ -66,18 +64,19 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "No paired Bluetooth devices found", Toast.LENGTH_SHORT).show()
                     handler.postDelayed(this, 5000)
                 } else {
-                    var deviceNames:StringBuffer = StringBuffer()
-                    var deviceInfos:StringBuffer = StringBuffer()
+                    val deviceNames = StringBuffer()
+                    val deviceInfos = StringBuffer()
 
                     for(device in pairedDevices)
                     {
                         if(isConnected((device))) {
+                            connectedDevices.add(device)
                             deviceNames.append(" " + device.name + "\n")
                             deviceInfos.append(" " + device.address + "\n")
                         }
                     }
 
-                    if (deviceNames.length < 0) {
+                    if (deviceNames.isEmpty()) {
                         Toast.makeText(this@MainActivity, "Connected Bluetooth devices not found"
                                 + deviceNames, Toast.LENGTH_SHORT).show()
                         handler.postDelayed(this, 5000)
@@ -96,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         handler.postDelayed(runnable, 5000)
     }
 
-    fun checkBluetoothPermission() {
+    private fun checkBluetoothPermission() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.BLUETOOTH_CONNECT
@@ -113,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun enableBluetooth() {
+    private fun enableBluetooth() {
         if (!bluetoothAdapter.isEnabled) {
             // Create ActivityResultContract for enabling Bluetooth
             val requestEnableContract = registerForActivityResult(
@@ -134,7 +133,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun checkBluSupport() {
+    private fun checkBluSupport() {
         if (bluetoothAdapter == null) {
             Toast.makeText(this, "Bluetooth is not supported", Toast.LENGTH_SHORT)
                 .show()
