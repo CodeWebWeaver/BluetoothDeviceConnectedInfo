@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.os.postDelayed
+import androidx.core.view.postDelayed
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Runnable
@@ -87,19 +88,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun displayDeviceInfo(devices: List<BluetoothDevice>) {
-        val changeViewTask = object : Runnable {
-            override fun run() {
-                checkBluetoothPermission()
-                val deviceNames = devices.joinToString("\n") { it.name ?: "Unknown" }
-                val deviceInfos = devices.joinToString("\n") { it.address ?: "None"}
+    private fun displayDeviceInfo(devices: List<BluetoothDevice>) {
+        textView.postDelayed(1000) {
+            checkBluetoothPermission()
+            val deviceNames = devices.joinToString("\n") { it.name ?: "Unknown" }
+            val deviceInfos = devices.joinToString("\n") { it.address ?: "None"}
 
-                bluetoothDeviceText.text = getString(R.string.bluetooth_device_text, deviceNames)
-                bluetootInfoText.text = getString(R.string.device_info_text, deviceInfos)
-            }
+            bluetoothDeviceText.text = getString(R.string.bluetooth_device_text, deviceNames)
+            bluetootInfoText.text = getString(R.string.device_info_text, deviceInfos)
         }
-        handler = Handler(Looper.getMainLooper())
-        handler.postDelayed(changeViewTask, 1000)
     }
 
     private suspend fun showToastOnMainThread(message: String) {
