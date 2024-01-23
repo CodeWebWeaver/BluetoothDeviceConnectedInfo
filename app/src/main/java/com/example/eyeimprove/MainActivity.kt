@@ -77,9 +77,7 @@ class MainActivity : AppCompatActivity() {
                     displayDeviceInfo(connectedDevices)
                 } else {
                     // Зміни в UI повинні відбуватися на основному потоці
-                    withContext(Dispatchers.Main) {
-                        displayDeviceInfo(connectedDevices)
-                    }
+                    displayDeviceInfo(connectedDevices)
                 }
             }
             delay(5000)
@@ -87,6 +85,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showToastOnMainThread(message: String) {
+        lifecycleScope.launch(Dispatchers.Main) {
+            Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+        }
+    }
     private fun displayDeviceInfo(devices: List<BluetoothDevice>) {
         lifecycleScope.launch(Dispatchers.Main)  {
             checkBluetoothPermission()
@@ -95,12 +98,6 @@ class MainActivity : AppCompatActivity() {
 
             bluetoothDeviceText.text = getString(R.string.bluetooth_device_text, deviceNames)
             bluetootInfoText.text = getString(R.string.device_info_text, deviceInfos)
-        }
-    }
-
-    private suspend fun showToastOnMainThread(message: String) {
-        withContext(Dispatchers.Main) {
-            Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
         }
     }
 
