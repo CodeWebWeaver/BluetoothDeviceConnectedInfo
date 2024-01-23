@@ -65,17 +65,23 @@ class MainActivity : AppCompatActivity() {
         val pairedDevices = bluetoothAdapter.bondedDevices
 
         if (pairedDevices.isEmpty()) {
-            showToastOnMainThread("No paired Bluetooth devices found")
-            displayDeviceInfo(connectedDevices)
+            lifecycleScope.launch(Dispatchers.Main) {
+                showToastOnMainThread("No paired Bluetooth devices found")
+                displayDeviceInfo(connectedDevices)
+            }
         } else {
             val connectedDevices = pairedDevices.filter { isConnected(it) }
 
             if (connectedDevices.isEmpty()) {
-                showToastOnMainThread("Connected Bluetooth devices not found")
-                displayDeviceInfo(connectedDevices)
+                lifecycleScope.launch(Dispatchers.Main) {
+                    showToastOnMainThread("Connected Bluetooth devices not found")
+                    displayDeviceInfo(connectedDevices)
+                }
             } else {
                 // Зміни в UI повинні відбуватися на основному потоці
-                displayDeviceInfo(connectedDevices)
+                lifecycleScope.launch(Dispatchers.Main) {
+                    displayDeviceInfo(connectedDevices)
+                }
             }
         }
         delay(5000)
@@ -83,19 +89,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showToastOnMainThread(message: String) {
-        lifecycleScope.launch(Dispatchers.Main) {
-            Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
-        }
+        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
     }
     private fun displayDeviceInfo(devices: List<BluetoothDevice>) {
-        lifecycleScope.launch(Dispatchers.Main)  {
-            checkBluetoothPermission()
-            val deviceNames = devices.joinToString("\n") { it.name ?: "Unknown" }
-            val deviceInfos = devices.joinToString("\n") { it.address ?: "None"}
+        checkBluetoothPermission()
+        val deviceNames = devices.joinToString("\n") { it.name ?: "Unknown" }
+        val deviceInfos = devices.joinToString("\n") { it.address ?: "None"}
 
-            bluetoothDeviceText.text = getString(R.string.bluetooth_device_text, deviceNames)
-            bluetootInfoText.text = getString(R.string.device_info_text, deviceInfos)
-        }
+        bluetoothDeviceText.text = getString(R.string.bluetooth_device_text, deviceNames)
+        bluetootInfoText.text = getString(R.string.device_info_text, deviceInfos)
     }
 
     private fun checkBluetoothPermission() {
