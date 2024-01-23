@@ -54,35 +54,32 @@ class MainActivity : AppCompatActivity() {
         checkBluSupport()
         checkBluetoothPermission()
         enableBluetooth()
-        lifecycleScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.IO) {
             getPairedDeviceInfo()
         }
-
     }
 
     private suspend fun getPairedDeviceInfo() {
-        withContext(Dispatchers.IO) {
-            // Асинхронна операція отримання списку з'єднаних пристроїв
-            checkBluetoothPermission()
-            val pairedDevices = bluetoothAdapter.bondedDevices
+        // Асинхронна операція отримання списку з'єднаних пристроїв
+        checkBluetoothPermission()
+        val pairedDevices = bluetoothAdapter.bondedDevices
 
-            if (pairedDevices.isEmpty()) {
-                showToastOnMainThread("No paired Bluetooth devices found")
+        if (pairedDevices.isEmpty()) {
+            showToastOnMainThread("No paired Bluetooth devices found")
+            displayDeviceInfo(connectedDevices)
+        } else {
+            val connectedDevices = pairedDevices.filter { isConnected(it) }
+
+            if (connectedDevices.isEmpty()) {
+                showToastOnMainThread("Connected Bluetooth devices not found")
                 displayDeviceInfo(connectedDevices)
             } else {
-                val connectedDevices = pairedDevices.filter { isConnected(it) }
-
-                if (connectedDevices.isEmpty()) {
-                    showToastOnMainThread("Connected Bluetooth devices not found")
-                    displayDeviceInfo(connectedDevices)
-                } else {
-                    // Зміни в UI повинні відбуватися на основному потоці
-                    displayDeviceInfo(connectedDevices)
-                }
+                // Зміни в UI повинні відбуватися на основному потоці
+                displayDeviceInfo(connectedDevices)
             }
-            delay(5000)
-            getPairedDeviceInfo()
         }
+        delay(5000)
+        getPairedDeviceInfo()
     }
 
     private fun showToastOnMainThread(message: String) {
