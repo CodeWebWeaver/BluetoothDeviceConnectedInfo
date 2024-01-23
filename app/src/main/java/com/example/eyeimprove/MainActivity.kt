@@ -15,6 +15,13 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.os.postDelayed
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.reflect.Method
 import java.util.UUID
 
@@ -48,51 +55,57 @@ class MainActivity : AppCompatActivity() {
         checkBluSupport()
         checkBluetoothPermission()
         enableBluetooth()
-        getPairedDeviceInfo()
+        GlobalScope.launch(Dispatchers.Main) {
+            getPairedDeviceInfo()
+        }
     }
 
-    fun getPairedDeviceInfo() {
+    suspend fun getPairedDeviceInfo() {
+        withContext(Dispatchers.IO) {
+            // Асинхронна операція отримання списку з'єднаних пристроїв
+            checkBluetoothPermission()
+            val pairedDevices = bluetoothAdapter.bondedDevices
 
-        val runnable = object : Runnable {
-            override fun run() {
-                checkBluetoothPermission()
+            if (pairedDevices.isEmpty()) {
+                showToastOnMainThread("No paired Bluetooth devices found")
+                displayDeviceInfo(connectedDevices)
+            } else {
+                val connectedDevices = pairedDevices.filter { isConnected(it) }
 
-                val pairedDevices = bluetoothAdapter.bondedDevices
-
-
-                if (pairedDevices.isEmpty()) {
-                    Toast.makeText(this@MainActivity, "No paired Bluetooth devices found", Toast.LENGTH_SHORT).show()
-                    handler.postDelayed(this, 5000)
+                if (connectedDevices.isEmpty()) {
+                    showToastOnMainThread("Connected Bluetooth devices not found")
+                    displayDeviceInfo(connectedDevices)
                 } else {
-                    val deviceNames = StringBuffer()
-                    val deviceInfos = StringBuffer()
-
-                    for(device in pairedDevices)
-                    {
-                        if(isConnected((device))) {
-                            connectedDevices.add(device)
-                            deviceNames.append(" " + device.name + "\n")
-                            deviceInfos.append(" " + device.address + "\n")
-                        }
-                    }
-
-                    if (deviceNames.isEmpty()) {
-                        Toast.makeText(this@MainActivity, "Connected Bluetooth devices not found"
-                                + deviceNames, Toast.LENGTH_SHORT).show()
-                        handler.postDelayed(this, 5000)
-                    } else {
-                        Toast.makeText(this@MainActivity, "Paired Bluetooth devices found"
-                                + deviceNames, Toast.LENGTH_SHORT).show()
-                        // Found paired devices, display information about the first one
-                        bluetoothDeviceText.text = getString(R.string.bluetooth_device_text, deviceNames)
-                        bluetootInfoText.text = getString(R.string.device_info_text, deviceInfos)
+                    // Зміни в UI повинні відбуватися на основному потоці
+                    withContext(Dispatchers.Main) {
+                        displayDeviceInfo(connectedDevices)
                     }
                 }
             }
+            delay(5000)
+            getPairedDeviceInfo()
         }
+    }
 
+    private suspend fun displayDeviceInfo(devices: List<BluetoothDevice>) {
+        val changeViewTask = object : Runnable {
+            override fun run() {
+                checkBluetoothPermission()
+                val deviceNames = devices.joinToString("\n") { it.name ?: "Unknown" }
+                val deviceInfos = devices.joinToString("\n") { it.address ?: "None"}
+
+                bluetoothDeviceText.text = getString(R.string.bluetooth_device_text, deviceNames)
+                bluetootInfoText.text = getString(R.string.device_info_text, deviceInfos)
+            }
+        }
         handler = Handler(Looper.getMainLooper())
-        handler.postDelayed(runnable, 5000)
+        handler.postDelayed(changeViewTask, 1000)
+    }
+
+    private suspend fun showToastOnMainThread(message: String) {
+        withContext(Dispatchers.Main) {
+            Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun checkBluetoothPermission() {
