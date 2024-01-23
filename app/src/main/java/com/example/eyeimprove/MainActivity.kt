@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    suspend fun getPairedDeviceInfo() {
+    private suspend fun getPairedDeviceInfo() {
         withContext(Dispatchers.IO) {
             // Асинхронна операція отримання списку з'єднаних пристроїв
             checkBluetoothPermission()
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun displayDeviceInfo(devices: List<BluetoothDevice>) {
+    private fun displayDeviceInfo(devices: List<BluetoothDevice>) {
         lifecycleScope.launch(Dispatchers.Main)  {
             checkBluetoothPermission()
             val deviceNames = devices.joinToString("\n") { it.name ?: "Unknown" }
