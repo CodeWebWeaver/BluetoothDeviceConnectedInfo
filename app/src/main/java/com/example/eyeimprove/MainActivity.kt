@@ -8,18 +8,14 @@ import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.os.postDelayed
+import androidx.lifecycle.lifecycleScope
 import androidx.core.view.postDelayed
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,14 +24,13 @@ import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
-    private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
-    private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
+    //private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
+    //private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
     private val REQUEST_ENABLE_BT = 1
 
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private lateinit var bluetoothManager: BluetoothManager
     private lateinit var bluetoothSocket: BluetoothSocket
-    private lateinit var handler: Handler
     private lateinit var textView: TextView
     private lateinit var bluetoothDeviceText: TextView
     private lateinit var bluetootInfoText: TextView
@@ -56,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         checkBluSupport()
         checkBluetoothPermission()
         enableBluetooth()
-        GlobalScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.Main) {
             getPairedDeviceInfo()
         }
     }
@@ -88,8 +83,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayDeviceInfo(devices: List<BluetoothDevice>) {
-        textView.postDelayed(1000) {
+    fun displayDeviceInfo(devices: List<BluetoothDevice>) {
+        textView.postDelayed(500) {
             checkBluetoothPermission()
             val deviceNames = devices.joinToString("\n") { it.name ?: "Unknown" }
             val deviceInfos = devices.joinToString("\n") { it.address ?: "None"}
