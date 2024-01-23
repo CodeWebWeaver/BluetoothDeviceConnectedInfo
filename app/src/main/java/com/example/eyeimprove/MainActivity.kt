@@ -24,8 +24,8 @@ import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
-    //private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
-    //private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
+    private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
+    private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
     private val REQUEST_ENABLE_BT = 1
 
     private lateinit var bluetoothAdapter: BluetoothAdapter
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun displayDeviceInfo(devices: List<BluetoothDevice>) {
-        textView.postDelayed(500) {
+        lifecycleScope.launch(Dispatchers.Main)  {
             checkBluetoothPermission()
             val deviceNames = devices.joinToString("\n") { it.name ?: "Unknown" }
             val deviceInfos = devices.joinToString("\n") { it.address ?: "None"}
