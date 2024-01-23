@@ -24,17 +24,20 @@ import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
-    private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
-    private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
+    //Connection Parameters
     private val REQUEST_ENABLE_BT = 1
-
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private lateinit var bluetoothManager: BluetoothManager
-    private lateinit var bluetoothSocket: BluetoothSocket
+    private var connectedDevices: MutableList<BluetoothDevice> = mutableListOf()
+
     private lateinit var textView: TextView
     private lateinit var bluetoothDeviceText: TextView
     private lateinit var bluetootInfoText: TextView
-    private var connectedDevices: MutableList<BluetoothDevice> = mutableListOf()
+
+    //Communication parameters
+    private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
+    private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
+    private lateinit var bluetoothSocket: BluetoothSocket
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.Main) {
             getPairedDeviceInfo()
         }
+
     }
 
     suspend fun getPairedDeviceInfo() {
