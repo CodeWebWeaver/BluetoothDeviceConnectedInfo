@@ -1,9 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EyeImprove</string>
-    <string name="humidify">Влажность:</string>
-    <string name="temperatureValue">0</string>
-    <string name="temperature">Температура:</string>
-    <string name="humidifyValue">0</string>
-    <string name="bluetooth_device_text">Bluetooth Device: %1$s</string>
-    <string name="device_info_text">Info: %1$s</string>
+	<!-- bluetooth_check_screen strings -->
+	<string name="app_name">Page 1</string>
+	<string name="ek_img_content">ExportKit Image</string>
+	<string name="submit_bluetooth_button_text">Перевірити</string>
+	<string name="bluetooth_string">Bluetooth</string>
+	<string name="header_bluetooth_check">Для роботи необхідно ввімкнути</string>
+
+	<!--  device_picker_screen strings  -->
+	<string name="______arduino_uno_r3_string">: Arduino Uno R3</string>
+	<string name="________5356_ffa4_2573_734f_25626_string">: 5356-FFA4-2573-734F-25626</string>
+	<string name="______arduino_uno_r3_ek1_string">: Arduino Uno R3</string>
+	<string name="________5356_ffa4_2573_734f_25626_ek1_string">: 5356-FFA4-2573-734F-25626</string>
+	<string name="______g_300_string">: G-300</string>
+	<string name="________5356_ffa4_2573_734f_25626_ek2_string">: 5356-FFA4-2573-734F-25626</string>
+	<string name="______arduino_uno_r3_ek2_string">: Arduino Uno R3</string>
+	<string name="________5356_ffa4_2573_734f_25626_ek3_string">: 5356-FFA4-2573-734F-25626</string>
+	<string name="____________string"/>
+	<string name="____________ek1_string">Повернутись</string>
+
+	<!--  control_screen strings  -->
+	<string name="t___string">t= </string>
+	<string name="___string">= </string>
+	<string name="f___string">f = </string>
+	<string name="_15_25_c__string">15-25 C</string>
+	<string name="_50_80___string">50-80 %</string>
+	<string name="_100_900_hz_string">100-900 Hz</string>
+	<string name="________________string"> </string>
+	<string name="bluetooth_icon_descr">Bluetooth_icon</string>
+	<string name="bacground_dscr">bacground</string>
 </resources>
