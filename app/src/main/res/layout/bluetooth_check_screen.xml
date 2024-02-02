@@ -63,7 +63,6 @@
 					android:layout_gravity="center"
 					android:layout_marginTop="400dp"
 					android:backgroundTint="@color/_bg___blutooth_check_button_ek1_color"
-					android:drawableLeft="@drawable/bluetooth_icon2x"
 					android:fontFamily="@font/open_sans"
 					android:paddingStart="16dp"
 					android:paddingTop="8dp"
@@ -75,7 +74,9 @@
 					android:typeface="normal"
 					app:icon="@android:drawable/stat_sys_data_bluetooth"
 					app:iconSize="40dp"
-					app:iconTint="#7DB53C" />
+					app:iconTint="#7DB53C"
+					android:clickable="true"
+					android:focusable="true"/>
 
 
 			</LinearLayout>
