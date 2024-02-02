@@ -160,7 +160,7 @@
 					app:layout_constraintTop_toBottomOf="@+id/enter_params_header_text">
 
 					<androidx.constraintlayout.widget.ConstraintLayout
-						android:id="@+id/constraintLayout"
+						android:id="@+id/input_field_name"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_marginTop="12dp"
@@ -176,8 +176,8 @@
 							android:textColor="@color/black"
 							android:textSize="14sp"
 							android:textStyle="bold"
-							app:layout_constraintStart_toStartOf="inputs_fields"
-							app:layout_constraintTop_toBottomOf="inputs_fields" />
+							app:layout_constraintStart_toStartOf="input_field_name"
+							app:layout_constraintTop_toBottomOf="input_field_name" />
 
 						<TextView
 							android:id="@+id/humidify_input"
@@ -211,29 +211,31 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_marginStart="2dp"
-						app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+						app:layout_constraintStart_toEndOf="@+id/input_field_name"
 						app:layout_constraintTop_toTopOf="parent">
 
 						<EditText
 							android:id="@+id/temp_input_field"
-							android:layout_width="40dp"
+							android:layout_width="50dp"
 							android:layout_height="wrap_content"
 							android:backgroundTint="@color/_bg__communication_panels_ek1_color"
+							android:digits="0123456789"
 							android:fontFamily="@font/open_sans"
+							android:hint="@string/reset_input_str"
+							android:importantForAutofill="no"
+							android:inputType="number"
 							android:maxLength="3"
 							android:maxLines="1"
-							android:inputType="number"
-							android:hint="@string/reset_input_str"
-							android:digits="0123456789"
 							android:textColor="@color/black"
 							android:textSize="16sp"
 							android:textStyle="bold"
 							app:layout_constraintStart_toStartOf="inputs_fields"
-							app:layout_constraintTop_toBottomOf="inputs_fields" />
+							app:layout_constraintTop_toBottomOf="inputs_fields"
+							tools:ignore="DuplicateSpeakableTextCheck" />
 
 						<EditText
 							android:id="@+id/humidify_input_field"
-							android:layout_width="40dp"
+							android:layout_width="50dp"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="8dp"
 							android:backgroundTint="@color/_bg__communication_panels_ek1_color"
@@ -247,11 +249,12 @@
 							android:textSize="16sp"
 							android:textStyle="bold"
 							app:layout_constraintStart_toStartOf="parent"
-							app:layout_constraintTop_toBottomOf="@+id/temp_input_field" />
+							app:layout_constraintTop_toBottomOf="@+id/temp_input_field"
+							android:importantForAutofill="no" />
 
 						<EditText
 							android:id="@+id/frequency_input_field"
-							android:layout_width="40dp"
+							android:layout_width="50dp"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="8dp"
 							android:backgroundTint="@color/_bg__communication_panels_ek1_color"
@@ -266,7 +269,7 @@
 							android:digits="0123456789"
 							app:layout_constraintStart_toStartOf="parent"
 							app:layout_constraintTop_toBottomOf="@id/humidify_input_field"
-							/>
+							android:importantForAutofill="no" />
 					</androidx.constraintlayout.widget.ConstraintLayout>
 
 					<androidx.constraintlayout.widget.ConstraintLayout
