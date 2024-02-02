@@ -37,6 +37,7 @@
 					android:layout_width="300.4dp"
 					android:layout_height="73.4dp"
 					android:layout_gravity="center_horizontal|center"
+					android:fontFamily="@font/open_sans"
 					android:gravity="center"
 					android:text="@string/header_bluetooth_check"
 					android:textColor="@color/grey_color"
@@ -47,6 +48,7 @@
 					android:layout_width="127.4dp"
 					android:layout_height="40.4dp"
 					android:layout_gravity="center_horizontal|center"
+					android:fontFamily="@font/open_sans"
 					android:gravity="center"
 					android:text="@string/bluetooth_string"
 					android:textColor="@color/bluetooth_color"
@@ -58,10 +60,11 @@
 					android:id="@+id/buttonWithIconAndText"
 					android:layout_width="255dp"
 					android:layout_height="60dp"
+					android:layout_gravity="center"
 					android:layout_marginTop="400dp"
 					android:backgroundTint="@color/_bg___blutooth_check_button_ek1_color"
 					android:drawableLeft="@drawable/bluetooth_icon2x"
-					android:fontFamily="@font/open_sans_light"
+					android:fontFamily="@font/open_sans"
 					android:paddingStart="16dp"
 					android:paddingTop="8dp"
 					android:paddingEnd="16dp"
@@ -70,8 +73,9 @@
 					android:textSize="20sp"
 					android:textStyle="bold"
 					android:typeface="normal"
-					android:layout_gravity="center"
-					/>
+					app:icon="@android:drawable/stat_sys_data_bluetooth"
+					app:iconSize="40dp"
+					app:iconTint="#7DB53C" />
 
 
 			</LinearLayout>

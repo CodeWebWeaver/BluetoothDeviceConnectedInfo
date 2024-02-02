@@ -18,7 +18,7 @@
 	<color name="_bg__blu_picture_ek1_color">#000000</color>
 	<color name="ellipse_1_color">#023A94</color>
 	<color name="grey_color">#8E8E8E</color>
-	<color name="bluetooth_color">#F4F4F4</color>
+	<color name="bluetooth_color">#FF7DB53C</color>
 
 	<!--  device_picker_screen colors  -->
 	<color name="_bg__device_picker_screen_color">#FFFFFF</color>
