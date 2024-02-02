@@ -9,15 +9,9 @@
 	android:background="@drawable/device_picker_bg">
 
 	<Button
+		style="@style/ReturnButtonStyle"
 		android:id="@+id/return_button"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="8dp"
-		android:layout_marginTop="8dp"
-		android:backgroundTint="#FFFFFF"
 		android:text="@string/return_button_text"
-		android:textColor="#121212"
-		android:textSize="20sp"
 		app:icon="@drawable/return_vector"
 		app:iconTint="#000000"
 		app:layout_constraintStart_toStartOf="parent"

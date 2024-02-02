@@ -9,15 +9,9 @@
 	android:background="@drawable/control_panel_bacground">
 
 	<Button
+		style="@style/ReturnButtonStyle"
 		android:id="@+id/return_button"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="8dp"
-		android:layout_marginTop="8dp"
-		android:backgroundTint="#3B9879"
 		android:text="@string/return_button_text"
-		android:textColor="#F1F1F1"
-		android:textSize="20sp"
 		app:icon="@drawable/return_vector"
 		app:iconTint="@color/grey_return_button"
 		app:layout_constraintStart_toStartOf="parent"
