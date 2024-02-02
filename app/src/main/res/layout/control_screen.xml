@@ -14,12 +14,12 @@
 		android:layout_height="wrap_content"
 		android:layout_marginStart="8dp"
 		android:layout_marginTop="8dp"
-		android:backgroundTint="#FFFFFF"
+		android:backgroundTint="#3B9879"
 		android:text="@string/return_button_text"
-		android:textColor="#121212"
+		android:textColor="#F1F1F1"
 		android:textSize="20sp"
 		app:icon="@drawable/return_vector"
-		app:iconTint="#000000"
+		app:iconTint="@color/grey_return_button"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
@@ -216,6 +216,7 @@
 						android:id="@+id/input_fields"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
+						android:layout_marginStart="2dp"
 						app:layout_constraintStart_toEndOf="@+id/constraintLayout"
 						app:layout_constraintTop_toTopOf="parent">
 
@@ -271,7 +272,7 @@
 						android:id="@+id/input_descr_fields"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:layout_marginTop="18dp"
+						android:layout_marginTop="12dp"
 						app:layout_constraintEnd_toEndOf="parent"
 						app:layout_constraintStart_toEndOf="@+id/input_fields"
 						app:layout_constraintTop_toTopOf="parent">
@@ -286,7 +287,7 @@
 							android:textSize="14sp"
 							android:textStyle="bold"
 							app:layout_constraintStart_toStartOf="inputs_fields"
-							app:layout_constraintTop_toBottomOf="inputs_fields" />
+							app:layout_constraintTop_toTopOf="@id/input_descr_fields" />
 
 						<TextView
 							android:id="@+id/humidify_input_descr"
