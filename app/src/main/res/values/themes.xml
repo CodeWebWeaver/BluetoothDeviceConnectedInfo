@@ -1,9 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.EyeImprove" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#42A5F5</item>
+        <item name="colorAccent">#E1F5FE</item>
+        <item name="android:textColorPrimary">#757575</item>
+        <item name="android:textColorSecondary">#42A5F5</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="tabIndicatorColor">@color/colorPrimary</item>
     </style>
 
+    <style name="Widget.CardView.EyeImprove" parent="Widget.Material3.CardView.Filled">
+        <item name="background">@color/white</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="cardElevation">4dp</item>
+    </style>
     <style name="Theme.EyeImprove" parent="Base.Theme.EyeImprove" />
 </resources>

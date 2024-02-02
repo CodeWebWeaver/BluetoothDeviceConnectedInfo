@@ -30,5 +30,7 @@
 	<string name="cheker_bacground">cheker bacground</string>
 	<string name="sander_traa_0bcw6ctv5yo_unsplash_1">sander_traa_0bcw6ctv5yo_unsplash_1</string>
 	<string name="connected_devises_text">ПІдключені пристрої:</string>
+	<string name="connected_device_name">Name:</string>
+	<string name="connected_device_address">Address:</string>
 
 </resources>
