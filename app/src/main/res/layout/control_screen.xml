@@ -228,7 +228,9 @@
 							android:fontFamily="@font/open_sans"
 							android:maxLength="3"
 							android:maxLines="1"
-							android:text="@string/reset_input_str"
+							android:inputType="number"
+							android:hint="@string/reset_input_str"
+							android:digits="0123456789"
 							android:textColor="@color/black"
 							android:textSize="16sp"
 							android:textStyle="bold"
@@ -244,7 +246,9 @@
 							android:fontFamily="@font/open_sans"
 							android:maxLength="3"
 							android:maxLines="1"
-							android:text="@string/reset_input_str"
+							android:inputType="number"
+							android:hint="@string/reset_input_str"
+							android:digits="0123456789"
 							android:textColor="@color/black"
 							android:textSize="16sp"
 							android:textStyle="bold"
@@ -260,12 +264,15 @@
 							android:fontFamily="@font/open_sans"
 							android:maxLength="3"
 							android:maxLines="1"
-							android:text="@string/reset_input_str"
 							android:textColor="@color/black"
 							android:textSize="16sp"
 							android:textStyle="bold"
+							android:inputType="number"
+							android:hint="@string/reset_input_str"
+							android:digits="0123456789"
 							app:layout_constraintStart_toStartOf="parent"
-							app:layout_constraintTop_toBottomOf="@id/humidify_input_field" />
+							app:layout_constraintTop_toBottomOf="@id/humidify_input_field"
+							/>
 					</androidx.constraintlayout.widget.ConstraintLayout>
 
 					<androidx.constraintlayout.widget.ConstraintLayout
