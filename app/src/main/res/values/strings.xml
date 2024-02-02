@@ -13,6 +13,9 @@
 	<string name="______g_300_string">: G-300</string>
 	<string name="________5356_ffa4_2573_734f_25626_ek2_string">: 5356-FFA4-2573-734F-25626</string>
 	<string name="return_button_text">Повернутись</string>
+	<string name="choose_device_text">Оберіть пристрій</string>
+	<string name="device_name">Eye-Improve</string>
+	<string name="submit_text">Підтвердити</string>
 
 	<!--  control_screen strings  -->
 	<string name="t___string">t= </string>
@@ -26,4 +29,6 @@
 	<string name="bacground_dscr">bacground</string>
 	<string name="cheker_bacground">cheker bacground</string>
 	<string name="sander_traa_0bcw6ctv5yo_unsplash_1">sander_traa_0bcw6ctv5yo_unsplash_1</string>
+	<string name="connected_devises_text">ПІдключені пристрої:</string>
+
 </resources>
