@@ -41,7 +41,8 @@
 					android:gravity="center"
 					android:text="@string/header_bluetooth_check"
 					android:textColor="@color/grey_color"
-					android:textSize="24sp" />
+					android:textSize="24sp"
+					tools:ignore="TextSizeCheck,TextSizeCheck" />
 
 				<TextView
 					android:id="@+id/bluetooth_text"
@@ -53,7 +54,8 @@
 					android:text="@string/bluetooth_string"
 					android:textColor="@color/bluetooth_color"
 					android:textSize="24sp"
-					android:textStyle="bold" />
+					android:textStyle="bold"
+					tools:ignore="TextSizeCheck" />
 
 
 				<Button
