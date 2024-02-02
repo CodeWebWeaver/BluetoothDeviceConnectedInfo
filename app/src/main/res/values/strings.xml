@@ -8,16 +8,11 @@
 	<string name="header_bluetooth_check">Для роботи необхідно ввімкнути</string>
 
 	<!--  device_picker_screen strings  -->
-	<string name="______arduino_uno_r3_string">: Arduino Uno R3</string>
-	<string name="________5356_ffa4_2573_734f_25626_string">: 5356-FFA4-2573-734F-25626</string>
 	<string name="______arduino_uno_r3_ek1_string">: Arduino Uno R3</string>
 	<string name="________5356_ffa4_2573_734f_25626_ek1_string">: 5356-FFA4-2573-734F-25626</string>
 	<string name="______g_300_string">: G-300</string>
 	<string name="________5356_ffa4_2573_734f_25626_ek2_string">: 5356-FFA4-2573-734F-25626</string>
-	<string name="______arduino_uno_r3_ek2_string">: Arduino Uno R3</string>
-	<string name="________5356_ffa4_2573_734f_25626_ek3_string">: 5356-FFA4-2573-734F-25626</string>
-	<string name="____________string"/>
-	<string name="____________ek1_string">Повернутись</string>
+	<string name="return_button_text">Повернутись</string>
 
 	<!--  control_screen strings  -->
 	<string name="t___string">t= </string>
@@ -29,4 +24,6 @@
 	<string name="________________string"> </string>
 	<string name="bluetooth_icon_descr">Bluetooth_icon</string>
 	<string name="bacground_dscr">bacground</string>
+	<string name="cheker_bacground">cheker bacground</string>
+	<string name="sander_traa_0bcw6ctv5yo_unsplash_1">sander_traa_0bcw6ctv5yo_unsplash_1</string>
 </resources>

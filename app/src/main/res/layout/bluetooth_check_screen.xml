@@ -6,15 +6,6 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context=".MainActivity">
-
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:id="@+id/bluetooth_check_screen"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:layout_constraintRight_toRightOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent">
-
 		<RelativeLayout
 			android:id="@+id/page_bluetooth_check_screen_ek1"
 			android:layout_width="match_parent"
@@ -24,17 +15,12 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent">
 
-			<View
-				android:id="@+id/_bg__bluetooth_check_screen_ek2"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:background="@drawable/_bg__bluetooth_check_screen_ek2_shape" />
-
 			<ImageView
 				android:id="@+id/background"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:src="@drawable/bluetooth_cheker_bacground" />
+				android:src="@drawable/bluetooth_cheker_bacground"
+				android:contentDescription="@string/cheker_bacground" />
 
 			<LinearLayout
 				android:id="@+id/bluetooth_message"
@@ -67,58 +53,27 @@
 					android:textSize="24sp"
 					android:textStyle="bold" />
 
-				<RelativeLayout
-					android:id="@+id/bluetooth_check_button"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+
+				<Button
+					android:id="@+id/buttonWithIconAndText"
+					android:layout_width="255dp"
+					android:layout_height="60dp"
 					android:layout_marginTop="400dp"
-					android:layout_gravity="center">
+					android:backgroundTint="@color/_bg___blutooth_check_button_ek1_color"
+					android:drawableLeft="@drawable/bluetooth_icon2x"
+					android:fontFamily="@font/open_sans_light"
+					android:paddingStart="16dp"
+					android:paddingTop="8dp"
+					android:paddingEnd="16dp"
+					android:paddingBottom="8dp"
+					android:text="@string/submit_bluetooth_button_text"
+					android:textSize="20sp"
+					android:textStyle="bold"
+					android:typeface="normal"
+					android:layout_gravity="center"
+					/>
 
-					<View
-						android:id="@+id/_bg___bluetooth_check_button_ek1"
-						android:layout_width="217dp"
-						android:layout_height="58dp"
-						android:background="@drawable/_bg___bluetooth_check_button_ek1_shape" />
 
-					<RelativeLayout
-						android:id="@+id/bluetooth_picture"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginStart="12dp"
-						android:layout_marginTop="9dp">
-
-						<View
-							android:id="@+id/ellipse_1"
-							android:layout_width="40dp"
-							android:layout_height="40dp"
-							android:background="@drawable/ellipse_1_shape" />
-
-						<ImageView
-							android:id="@+id/bluetooth_icon"
-							android:layout_width="10.67dp"
-							android:layout_height="24dp"
-							android:layout_marginStart="15dp"
-							android:layout_marginTop="8dp"
-							android:contentDescription="@string/bluetooth_icon_descr"
-							android:src="@drawable/bluetooth_vector" />
-
-					</RelativeLayout>
-
-					<TextView
-						android:id="@+id/submit_bluetooth_button"
-						android:layout_width="149dp"
-						android:layout_height="60dp"
-						android:layout_gravity="center_horizontal|center"
-						android:layout_marginStart="60dp"
-						android:layout_marginTop="2dp"
-						android:gravity="center"
-						android:text="@string/submit_bluetooth_button_text"
-						android:textColor="@color/bluetooth_color"
-						android:textSize="20sp"
-						android:textStyle="bold" />
-
-				</RelativeLayout>
 			</LinearLayout>
 		</RelativeLayout>
-	</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
