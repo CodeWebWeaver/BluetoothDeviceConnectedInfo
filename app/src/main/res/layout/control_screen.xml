@@ -1,389 +1,350 @@
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent" android:layout_height="wrap_content" >
-	<!-- 
-	/*
-	 *	This content is generated from the API File Info.
-	 *	(Alt+Shift+Ctrl+I).
-	 *
-	 *	@desc 		
-	 *	@file 		control_screen
-	 *	@date 		Thursday 01st of February 2024 08:35:49 AM
-	 *	@title 		Page 2
-	 *	@author 	
-	 *	@keywords 	
-	 *	@generator 	Export Kit v1.3.figma
-	 *
-	 */
-	-->
-	<ScrollView android:id="@+id/control_screen" 
-		android:layout_width="wrap_content" 
-		android:layout_height="match_parent" >
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".MainActivity"
+	android:background="@drawable/control_panel_bacground">
 
-		<RelativeLayout android:id="@+id/content_container" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content" >
+	<Button
+		android:id="@+id/return_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:layout_marginTop="8dp"
+		android:backgroundTint="#FFFFFF"
+		android:text="@string/return_button_text"
+		android:textColor="#121212"
+		android:textSize="20sp"
+		app:icon="@drawable/return_vector"
+		app:iconTint="#000000"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 
-			<View   android:id="@+id/_bg__control_screen"
-				android:background="@drawable/_bg__control_screen_shape"
-				 android:layout_marginStart="0dp"
-				android:layout_marginTop="0dp"
-				android:layout_width="360dp"
-				android:layout_height="640dp" />
+	<androidx.cardview.widget.CardView
+		android:id="@+id/parameters_info_card"
+		android:layout_width="320dp"
+		android:layout_height="200dp"
+		android:layout_marginTop="16dp"
+		app:cardBackgroundColor="#B3E3EFE7"
+		app:cardCornerRadius="8dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/return_button">
 
-			<ImageView android:id="@+id/bacground"
-				android:src="@drawable/bluetooth_cheker_bacground"
-				android:contentDescription="bacground"
-				 android:layout_marginStart="0dp"
-				android:layout_marginTop="0dp"
-				android:layout_width="360dp"
-				android:layout_height="640dp" />
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 
-
-			<RelativeLayout android:id="@+id/communication_panels"
-				android:layout_marginTop="72dp"
-				android:layout_marginStart="24dp"
-				android:layout_width="wrap_content"
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/choose_device_header"
+				android:layout_width="275dp"
 				android:layout_height="wrap_content"
-				>
+				android:layout_marginStart="12dp"
+				android:layout_marginTop="12dp"
+				android:layout_marginEnd="12dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:ignore="TextSizeCheck">
 
-				<View   android:id="@+id/_bg__communication_panels_ek1"
-					android:background="@drawable/_bg__communication_panels_ek1_shape"
-					 android:layout_marginStart="0dp"
-					android:layout_marginTop="0dp"
-					android:layout_width="312dp"
-					android:layout_height="488dp" />
-
-				<ImageView android:id="@+id/info_panel"
-					android:src="@drawable/info_panel"
-					android:contentDescription="info_panel"
-					 android:layout_marginStart="6dp"
-					android:layout_marginTop="17.5dp"
-					android:layout_width="300dp"
-					android:layout_height="200dp" />
-
-
-				<RelativeLayout android:id="@+id/input_panel"
-					android:layout_marginTop="259.5dp"
-					android:layout_marginStart="6dp"
-					android:layout_width="wrap_content"
+				<TextView
+					android:id="@+id/choose_device_main"
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					>
-
-					<View   android:id="@+id/_bg__input_panel_ek1"
-						android:background="@drawable/_bg__input_panel_ek1_shape"
-						 android:layout_marginStart="0dp"
-						android:layout_marginTop="0dp"
-						android:layout_width="300dp"
-						android:layout_height="211dp" />
-
-					<ImageView android:id="@+id/input_header"
-						android:src="@drawable/input_header"
-						android:contentDescription="input_header"
-						 android:layout_marginStart="0dp"
-						android:layout_marginTop="0dp"
-						android:layout_width="300dp"
-						android:layout_height="61dp" />
-
-
-					<RelativeLayout android:id="@+id/input_body"
-						android:layout_marginTop="61dp"
-						android:layout_marginStart="0dp"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						>
-
-						<View   android:id="@+id/_bg__input_body_ek1"
-							android:background="@drawable/_bg__input_body_ek1_shape"
-							 android:layout_marginStart="0dp"
-							android:layout_marginTop="0dp"
-							android:layout_width="300dp"
-							android:layout_height="89dp" />
-
-
-						<RelativeLayout android:id="@+id/inputs"
-							android:layout_marginTop="12dp"
-							android:layout_marginStart="42dp"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							>
-
-							<View   android:id="@+id/_bg__inputs_ek1"
-								android:background="@drawable/_bg__inputs_ek1_shape"
-								 android:layout_marginStart="0dp"
-								android:layout_marginTop="0dp"
-								android:layout_width="140dp"
-								android:layout_height="65dp" />
-
-
-							<RelativeLayout android:id="@+id/temp_input"
-								android:layout_marginTop="0dp"
-								android:layout_marginStart="0dp"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								>
-
-								<View   android:id="@+id/_bg__temp_input_ek1"
-									android:background="@drawable/_bg__temp_input_ek1_shape"
-									 android:layout_marginStart="0dp"
-									android:layout_marginTop="0dp"
-									android:layout_width="140dp"
-									android:layout_height="15dp" />
-
-								<TextView android:id="@+id/t__"
-									android:textSize="12sp"
-									android:textColor="@color/_bg__communication_panels_ek1_color"
-									android:layout_marginLeft="0dp"
-									android:layout_marginTop="0dp"
-									android:layout_width="32.2dp"
-									android:layout_height="18.2dp"
-									android:text="@string/t___string"
-									 />
-
-								<View   android:id="@+id/input"
-									android:background="@drawable/input_shape"
-									 android:layout_marginStart="20dp"
-									android:layout_marginTop="0dp"
-									android:layout_width="120dp"
-									android:layout_height="15dp" />
-
-							</RelativeLayout>
-
-
-							<RelativeLayout android:id="@+id/wet_input"
-								android:layout_marginTop="25dp"
-								android:layout_marginStart="0dp"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								>
-
-								<View   android:id="@+id/_bg__wet_input_ek1"
-									android:background="@drawable/_bg__wet_input_ek1_shape"
-									 android:layout_marginStart="0dp"
-									android:layout_marginTop="0dp"
-									android:layout_width="140dp"
-									android:layout_height="15dp" />
-
-								<TextView android:id="@+id/__"
-									android:textStyle="bold"
-									android:textSize="12sp"
-									android:textColor="@color/_bg__communication_panels_ek1_color"
-									android:layout_marginLeft="0dp"
-									android:layout_marginTop="0dp"
-									android:layout_width="32.2dp"
-									android:layout_height="18.2dp"
-									android:text="@string/___string"
-									 />
-
-								<View   android:id="@+id/input_ek1"
-									android:background="@drawable/input_ek1_shape"
-									 android:layout_marginStart="20dp"
-									android:layout_marginTop="0dp"
-									android:layout_width="120dp"
-									android:layout_height="15dp" />
-
-							</RelativeLayout>
-
-
-							<RelativeLayout android:id="@+id/freq_input"
-								android:layout_marginTop="50dp"
-								android:layout_marginStart="0dp"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								>
-
-								<View   android:id="@+id/_bg__freq_input_ek1"
-									android:background="@drawable/_bg__freq_input_ek1_shape"
-									 android:layout_marginStart="0dp"
-									android:layout_marginTop="0dp"
-									android:layout_width="140dp"
-									android:layout_height="15dp" />
-
-								<TextView android:id="@+id/f__"
-									android:textStyle="bold"
-									android:textSize="12sp"
-									android:textColor="@color/_bg__communication_panels_ek1_color"
-									android:layout_marginLeft="0dp"
-									android:layout_marginTop="0dp"
-									android:layout_width="32.2dp"
-									android:layout_height="18.2dp"
-									android:text="@string/f___string"
-									 />
-
-								<View   android:id="@+id/input_ek2"
-									android:background="@drawable/input_ek2_shape"
-									 android:layout_marginStart="20dp"
-									android:layout_marginTop="0dp"
-									android:layout_width="120dp"
-									android:layout_height="15dp" />
-
-							</RelativeLayout>
-
-						</RelativeLayout>
-
-
-						<RelativeLayout android:id="@+id/ranges"
-							android:layout_marginTop="12dp"
-							android:layout_marginStart="186dp"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							>
-
-							<View   android:id="@+id/_bg__ranges_ek1"
-								android:background="@drawable/_bg__ranges_ek1_shape"
-								 android:layout_marginStart="0dp"
-								android:layout_marginTop="0dp"
-								android:layout_width="72dp"
-								android:layout_height="65dp" />
-
-							<TextView android:id="@+id/_15_25_c_"
-								android:textStyle="bold"
-								android:textSize="12sp"
-								android:textColor="@color/_bg__communication_panels_ek1_color"
-								android:layout_marginLeft="0dp"
-								android:layout_marginTop="0dp"
-								android:layout_width="64.2dp"
-								android:layout_height="18.2dp"
-								android:text="@string/_15_25_c__string"
-								 />
-
-							<TextView android:id="@+id/_50_80__"
-								android:textStyle="bold"
-								android:textSize="12sp"
-								android:textColor="@color/_bg__communication_panels_ek1_color"
-								android:layout_marginLeft="0dp"
-								android:layout_marginTop="25dp"
-								android:layout_width="63.2dp"
-								android:layout_height="18.2dp"
-								android:text="@string/_50_80___string"
-								 />
-
-							<TextView android:id="@+id/_100_900_hz"
-								android:textStyle="bold"
-								android:textSize="12sp"
-								android:textColor="@color/_bg__communication_panels_ek1_color"
-								android:layout_marginLeft="0dp"
-								android:layout_marginTop="50dp"
-								android:layout_width="84.2dp"
-								android:layout_height="18.2dp"
-								android:text="@string/_100_900_hz_string"
-								 />
-
-						</RelativeLayout>
-
-					</RelativeLayout>
-
-
-					<RelativeLayout android:id="@+id/input_footer"
-						android:layout_marginTop="150dp"
-						android:layout_marginStart="0dp"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						>
-
-						<View   android:id="@+id/_bg__input_footer_ek1"
-							android:background="@drawable/_bg__input_footer_ek1_shape"
-							 android:layout_marginStart="0dp"
-							android:layout_marginTop="0dp"
-							android:layout_width="300dp"
-							android:layout_height="61dp" />
-
-						<View   android:id="@+id/divider"
-							android:background="@drawable/divider_shape"
-							 android:layout_marginStart="59dp"
-							android:layout_marginTop="6dp"
-							android:layout_width="182dp"
-							android:layout_height="1dp" />
-
-
-						<RelativeLayout android:id="@+id/submit_button"
-							android:layout_marginTop="19dp"
-							android:layout_marginStart="74.5dp"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							>
-
-							<View   android:id="@+id/_bg__submit_button_ek1"
-								android:background="@drawable/_bg__submit_button_ek1_shape"
-								 android:layout_marginStart="0dp"
-								android:layout_marginTop="0dp"
-								android:layout_width="151dp"
-								android:layout_height="30dp" />
-
-							<TextView android:id="@+id/_______________"
-								android:textStyle="bold"
-								android:textSize="16sp"
-								android:textColor="@color/________________color"
-								android:layout_marginLeft="4dp"
-								android:layout_marginTop="4dp"
-								android:layout_width="157.6dp"
-								android:layout_height="26.6dp"
-								android:text="@string/________________string"
-								 />
-
-						</RelativeLayout>
-
-					</RelativeLayout>
-
-				</RelativeLayout>
-
-			</RelativeLayout>
-
-
-			<RelativeLayout android:id="@+id/back_button"
-				android:layout_marginTop="24dp"
-				android:layout_marginStart="24dp"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				>
-
-				<View   android:id="@+id/_bg__back_button_ek1"
-					android:background="@drawable/_bg__back_button_ek1_shape"
-					 android:layout_marginStart="0dp"
-					android:layout_marginTop="0dp"
-					android:layout_width="146dp"
-					android:layout_height="32dp" />
-
-
-				<RelativeLayout android:id="@+id/keyboard_return"
-					android:layout_marginTop="4dp"
-					android:layout_marginStart="4dp"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					>
-
-					<View   android:id="@+id/_bg__keyboard_return_ek1"
-						android:background="@drawable/_bg__keyboard_return_ek1_shape"
-						 android:layout_marginStart="0dp"
-						android:layout_marginTop="0dp"
-						android:layout_width="24dp"
-						android:layout_height="24dp" />
-
-					<ImageView android:id="@+id/vector"
-						android:src="@drawable/return_vector"
-						android:contentDescription="vector"
-						 android:layout_marginStart="2.5dp"
-						android:layout_marginTop="6dp"
-						android:layout_width="19dp"
-						android:layout_height="12dp" />
-
-				</RelativeLayout>
-
-				<TextView android:id="@+id/___________"
+					android:fontFamily="@font/open_sans"
+					android:text="@string/current_params_header"
+					android:textAlignment="center"
+					android:textColor="@color/black"
+					android:textSize="20sp"
 					android:textStyle="bold"
-					android:layout_gravity="center_horizontal|center"
-					android:gravity="center"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+
+				<TextView
+					android:id="@+id/temp_output"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="12dp"
+					android:fontFamily="@font/open_sans"
+					android:text="@string/temp_output"
+					android:textColor="@color/black"
 					android:textSize="16sp"
-					android:textColor="@color/________________color"
-					android:layout_marginLeft="29dp"
-					android:layout_marginTop="5dp"
-					android:layout_width="117dp"
-					android:layout_height="26.6dp"
-					android:text="@string/____________string"
-					 />
+					android:textStyle="bold"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/choose_device_main" />
 
-			</RelativeLayout>
+				<TextView
+					android:id="@+id/humidify_output"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="32dp"
+					android:fontFamily="@font/open_sans"
+					android:text="@string/humidify_output"
+					android:textColor="@color/black"
+					android:textSize="16sp"
+					android:textStyle="bold"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/temp_output" />
 
-		</RelativeLayout>
+				<TextView
+					android:id="@+id/frequency_output"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="32dp"
+					android:fontFamily="@font/open_sans"
+					android:text="@string/frequency_output"
+					android:textColor="@color/black"
+					android:textSize="16sp"
+					android:textStyle="bold"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/humidify_output" />
 
-	</ScrollView>
-</HorizontalScrollView>
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/choose_device_footer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="12dp"
+				android:layout_marginEnd="12dp"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"/>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.cardview.widget.CardView>
+
+	<androidx.cardview.widget.CardView
+		android:id="@+id/parameters_input_card"
+		android:layout_width="320dp"
+		android:layout_height="300dp"
+		android:layout_marginTop="42dp"
+		app:cardBackgroundColor="#B3E3EFE7"
+		app:cardCornerRadius="8dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/parameters_info_card">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/parameters_input_header"
+				android:layout_width="275dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="12dp"
+				android:layout_marginTop="12dp"
+				android:layout_marginEnd="12dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:ignore="TextSizeCheck">
+
+				<TextView
+					android:id="@+id/enter_params_header_text"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/open_sans"
+					android:text="@string/params_input_header"
+					android:textAlignment="center"
+					android:textColor="@color/black"
+					android:textSize="20sp"
+					android:textStyle="bold"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/inputs_request_body"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					app:layout_constraintLeft_toLeftOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/enter_params_header_text">
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/constraintLayout"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent">
+
+						<TextView
+							android:id="@+id/temp_input"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:fontFamily="@font/open_sans"
+							android:text="@string/temp_output"
+							android:textColor="@color/black"
+							android:textSize="14sp"
+							android:textStyle="bold"
+							app:layout_constraintStart_toStartOf="inputs_fields"
+							app:layout_constraintTop_toBottomOf="inputs_fields" />
+
+						<TextView
+							android:id="@+id/humidify_input"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="32dp"
+							android:fontFamily="@font/open_sans"
+							android:text="@string/humidify_output"
+							android:textColor="@color/black"
+							android:textSize="14sp"
+							android:textStyle="bold"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/temp_input" />
+
+						<TextView
+							android:id="@+id/frequency_input"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="32dp"
+							android:fontFamily="@font/open_sans"
+							android:text="@string/frequency_output"
+							android:textColor="@color/black"
+							android:textSize="14sp"
+							android:textStyle="bold"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/humidify_input" />
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/input_fields"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+						app:layout_constraintTop_toTopOf="parent">
+
+						<EditText
+							android:id="@+id/temp_input_field"
+							android:layout_width="40dp"
+							android:layout_height="wrap_content"
+							android:backgroundTint="@color/_bg__communication_panels_ek1_color"
+							android:fontFamily="@font/open_sans"
+							android:maxLength="3"
+							android:maxLines="1"
+							android:text="@string/reset_input_str"
+							android:textColor="@color/black"
+							android:textSize="16sp"
+							android:textStyle="bold"
+							app:layout_constraintStart_toStartOf="inputs_fields"
+							app:layout_constraintTop_toBottomOf="inputs_fields" />
+
+						<EditText
+							android:id="@+id/humidify_input_field"
+							android:layout_width="40dp"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="8dp"
+							android:backgroundTint="@color/_bg__communication_panels_ek1_color"
+							android:fontFamily="@font/open_sans"
+							android:maxLength="3"
+							android:maxLines="1"
+							android:text="@string/reset_input_str"
+							android:textColor="@color/black"
+							android:textSize="16sp"
+							android:textStyle="bold"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/temp_input_field" />
+
+						<EditText
+							android:id="@+id/frequency_input_field"
+							android:layout_width="40dp"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="8dp"
+							android:backgroundTint="@color/_bg__communication_panels_ek1_color"
+							android:fontFamily="@font/open_sans"
+							android:maxLength="3"
+							android:maxLines="1"
+							android:text="@string/reset_input_str"
+							android:textColor="@color/black"
+							android:textSize="16sp"
+							android:textStyle="bold"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/humidify_input_field" />
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/input_descr_fields"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="18dp"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toEndOf="@+id/input_fields"
+						app:layout_constraintTop_toTopOf="parent">
+
+						<TextView
+							android:id="@+id/temp_input_descr"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:fontFamily="@font/open_sans"
+							android:text="@string/temp_input_descr"
+							android:textColor="@color/black"
+							android:textSize="14sp"
+							android:textStyle="bold"
+							app:layout_constraintStart_toStartOf="inputs_fields"
+							app:layout_constraintTop_toBottomOf="inputs_fields" />
+
+						<TextView
+							android:id="@+id/humidify_input_descr"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="32dp"
+							android:fontFamily="@font/open_sans"
+							android:text="@string/humidify_input_descr"
+							android:textColor="@color/black"
+							android:textSize="14sp"
+							android:textStyle="bold"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/temp_input_descr" />
+
+						<TextView
+							android:id="@+id/frequency_input_descr"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="32dp"
+							android:fontFamily="@font/open_sans"
+							android:text="@string/frequency_input_descr"
+							android:textColor="@color/black"
+							android:textSize="14sp"
+							android:textStyle="bold"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/humidify_input_descr" />
+					</androidx.constraintlayout.widget.ConstraintLayout>
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/input_footer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="12dp"
+				android:layout_marginEnd="12dp"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent">
+
+				<Button
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="12dp"
+					android:layout_marginBottom="12dp"
+					android:backgroundTint="@color/white"
+					android:text="@string/submit_text"
+					android:textColor="@color/black"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<!---->

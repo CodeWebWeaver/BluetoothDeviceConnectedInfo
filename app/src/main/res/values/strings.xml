@@ -33,5 +33,14 @@
 	<string name="connected_devises_text">ПІдключені пристрої:</string>
 	<string name="connected_device_name">Name:</string>
 	<string name="connected_device_address">Address:</string>
+	<string name="params_input_header">Внесення необхідних значень</string>
+	<string name="current_params_header">Поточні данні пристрою</string>
+	<string name="humidify_output">Вологість (φ) =</string>
+	<string name="frequency_output">Частота світла (f) =</string>
+	<string name="temp_output">Температура (t) =</string>
+	<string name="reset_input_str">0</string>
+	<string name="frequency_input_descr">100-900 Hz</string>
+	<string name="humidify_input_descr">50-80 %</string>
+	<string name="temp_input_descr">15-25 C°</string>
 
 </resources>
