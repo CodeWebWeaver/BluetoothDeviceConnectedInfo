@@ -8,7 +8,6 @@ import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +19,7 @@ import kotlinx.coroutines.launch
 import java.lang.reflect.Method
 import java.util.UUID
 
-class SecondScreenActivity : AppCompatActivity() {
+class PickerScreenActivity : AppCompatActivity() {
 
     //Connection Parameters
     private lateinit var bluetoothAdapter: BluetoothAdapter
@@ -33,8 +32,8 @@ class SecondScreenActivity : AppCompatActivity() {
     private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
     private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
     private lateinit var bluetoothSocket: BluetoothSocket
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.device_picker_screen)
         bluetoothManager = getSystemService(BluetoothManager::class.java) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
@@ -45,13 +44,13 @@ class SecondScreenActivity : AppCompatActivity() {
         checkBluetoothPermission { isPermissionGranted ->
             if (isPermissionGranted) {
                 // Действия, которые выполняются при наличии разрешения
-                Toast.makeText(this@SecondScreenActivity,
+                Toast.makeText(this@PickerScreenActivity,
                     "Bluetooth permission granted!",
                     Toast.LENGTH_SHORT).show()
                 enableBluetooth()
             } else {
                 // Действия, которые выполняются при отсутствии разрешения
-                Toast.makeText(this@SecondScreenActivity,
+                Toast.makeText(this@PickerScreenActivity,
                     "Bluetooth permission denied!",
                     Toast.LENGTH_SHORT).show()
             }
@@ -142,6 +141,28 @@ class SecondScreenActivity : AppCompatActivity() {
     }
 
     private fun showToastOnMainThread(message: String) {
-        Toast.makeText(this@SecondScreenActivity, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@PickerScreenActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun navigateToBluetoothCheckScreen(){
+        val intent = Intent(this, BluetoothCheckScreenActivity::class.java)
+        if (intent.resolveActivity(packageManager) != null) {
+            // Активити существует, можно использовать интент
+            startActivity(intent)
+        } else {
+            // Активити не найдена
+            Toast.makeText(this, "Activity not found", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun navigateToControlPanelScreen(){
+        val intent = Intent(this, ControlPanelActivity::class.java)
+        if (intent.resolveActivity(packageManager) != null) {
+            // Активити существует, можно использовать интент
+            startActivity(intent)
+        } else {
+            // Активити не найдена
+            Toast.makeText(this, "Activity not found", Toast.LENGTH_SHORT).show()
+        }
     }
 }

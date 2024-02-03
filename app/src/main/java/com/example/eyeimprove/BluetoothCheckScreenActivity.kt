@@ -6,20 +6,18 @@ import android.bluetooth.BluetoothManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 
-class FirstScreenActivity : AppCompatActivity() {
+class BluetoothCheckScreenActivity : AppCompatActivity() {
 
     private lateinit var bluetoothManager: BluetoothManager
     private lateinit var bluetoothAdapter: BluetoothAdapter
 
     private val bluetoothPermissionRequestCode = 123 // Выберите код запроса по вашему усмотрению
-
     private var bluetoothPermissionCallback: ((Boolean) -> Unit)? = null
 
     val requestEnableContract = registerForActivityResult(
@@ -52,13 +50,14 @@ class FirstScreenActivity : AppCompatActivity() {
         checkBluetoothPermission { isPermissionGranted ->
             if (isPermissionGranted) {
                 // Действия, которые выполняются при наличии разрешения
-                Toast.makeText(this@FirstScreenActivity,
+                Toast.makeText(this@BluetoothCheckScreenActivity,
                     "Bluetooth permission granted!",
                     Toast.LENGTH_SHORT).show()
                 enableBluetooth()
+                navigateToPickerScreen()
             } else {
                 // Действия, которые выполняются при отсутствии разрешения
-                Toast.makeText(this@FirstScreenActivity,
+                Toast.makeText(this@BluetoothCheckScreenActivity,
                     "Bluetooth permission denied!",
                     Toast.LENGTH_SHORT).show()
             }
@@ -107,5 +106,14 @@ class FirstScreenActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun navigateToPickerScreen(){
+        val intent = Intent(this, PickerScreenActivity::class.java)
+        if (intent.resolveActivity(packageManager) != null) {
+            // Активити существует, можно использовать интент
+            startActivity(intent)
+        } else {
+            // Активити не найдена
+            Toast.makeText(this, "Activity not found", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
