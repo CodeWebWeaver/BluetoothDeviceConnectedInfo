@@ -176,8 +176,8 @@
 							android:textColor="@color/black"
 							android:textSize="14sp"
 							android:textStyle="bold"
-							app:layout_constraintStart_toStartOf="input_field_name"
-							app:layout_constraintTop_toBottomOf="input_field_name" />
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent" />
 
 						<TextView
 							android:id="@+id/humidify_input"
@@ -229,8 +229,8 @@
 							android:textColor="@color/black"
 							android:textSize="16sp"
 							android:textStyle="bold"
-							app:layout_constraintStart_toStartOf="inputs_fields"
-							app:layout_constraintTop_toBottomOf="inputs_fields"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent"
 							tools:ignore="DuplicateSpeakableTextCheck" />
 
 						<EditText
@@ -290,8 +290,8 @@
 							android:textColor="@color/black"
 							android:textSize="14sp"
 							android:textStyle="bold"
-							app:layout_constraintStart_toStartOf="inputs_fields"
-							app:layout_constraintTop_toTopOf="@id/input_descr_fields" />
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent" />
 
 						<TextView
 							android:id="@+id/humidify_input_descr"
