@@ -2,45 +2,51 @@
 <resources>
 	<string name="app_name">Eye-Improve</string>
 
-	<!-- bluetooth_check_screen strings -->
+	<string name="return_button_text">Повернутись</string>
 	<string name="ek_img_content">ExportKit Image</string>
+
+	<!-- bluetooth_check_screen strings -->
 	<string name="submit_bluetooth_button_text">Перевірити</string>
 	<string name="bluetooth_string">Bluetooth</string>
 	<string name="header_bluetooth_check">Для роботи необхідно ввімкнути</string>
 
 	<!--  device_picker_screen strings  -->
-	<string name="______arduino_uno_r3_ek1_string">: Arduino Uno R3</string>
-	<string name="________5356_ffa4_2573_734f_25626_ek1_string">: 5356–FFA4–2573–734F–25626</string>
-	<string name="______g_300_string">: G-300</string>
-	<string name="________5356_ffa4_2573_734f_25626_ek2_string">: 5356–FFA4–2573–734F–25626</string>
-	<string name="return_button_text">Повернутись</string>
+	<string name="arduino_uno_r3_name">: Arduino Uno R3</string>
+	<string name="arduino_uno_r3_adddress">: 5356–FFA4–2573–734F–25626</string>
+	<string name="G_300_device">: G-300</string>
+	<string name="g_300_address">: 5356–FFA4–2573–734F–25626</string>
+
 	<string name="choose_device_text">Оберіть пристрій</string>
 	<string name="device_name">Eye-Improve</string>
 	<string name="submit_text">Підтвердити</string>
+	<string name="connected_devises_text">Підключені пристрої:</string>
+	<string name="connected_device_name">Name:</string>
+	<string name="connected_device_address">Address:</string>
 
 	<!--  control_screen strings  -->
-	<string name="t___string">t= </string>
-	<string name="___string">= </string>
-	<string name="f___string">f = </string>
-	<string name="_15_25_c__string">15–25 C</string>
-	<string name="_50_80___string">50–80 %</string>
-	<string name="_100_900_hz_string">100–900 Hz</string>
-	<string name="________________string"> </string>
 	<string name="bluetooth_icon_descr">Bluetooth_icon</string>
 	<string name="bacground_dscr">bacground</string>
 	<string name="cheker_bacground">cheker bacground</string>
 	<string name="sander_traa_0bcw6ctv5yo_unsplash_1">sander_traa_0bcw6ctv5yo_unsplash_!</string>
-	<string name="connected_devises_text">ПІдключені пристрої:</string>
-	<string name="connected_device_name">Name:</string>
-	<string name="connected_device_address">Address:</string>
-	<string name="params_input_header">Внесення необхідних значень</string>
+
+	<string name="params_input_header">Внесення бажаних значень</string>
 	<string name="current_params_header">Поточні данні пристрою</string>
 	<string name="humidify_output">Вологість (φ) =</string>
 	<string name="frequency_output">Частота світла (f) =</string>
 	<string name="temp_output">Температура (t) =</string>
 	<string name="reset_input_str">0</string>
-	<string name="frequency_input_descr">100-900 Hz</string>
-	<string name="humidify_input_descr">50-80 %</string>
-	<string name="temp_input_descr">15-25 C°</string>
+	<string name="frequency_input_descr">10–900 Hz</string>
+	<string name="humidify_input_descr">50–80 %</string>
+	<string name="temp_input_descr">15–25 C°</string>
+	<string name="ligth_intensity_input">Яскравість (%) =</string>
+	<string name="color_name">Колір :</string>
+	<string name="color_output">Колір =</string>
+	<string name="current_color">color</string>
+	<string name="current_light_intencity">%</string>
+	<string name="current_frequency">Hz</string>
+	<string name="percentage">%</string>
+	<string name="current_humidify">%</string>
+	<string name="current_temp">C°</string>
+	<string name="frequency_descr">Hz</string>
 
 </resources>
