@@ -6,8 +6,4 @@
     tools:context=".MainActivity"
     android:background="@drawable/control_panel_bacground">
 
-
-
-
 </RelativeLayout>
-

@@ -10,7 +10,7 @@
 
 	<Button
 		style="@style/ReturnButtonStyle"
-		android:id="@+id/return_button"
+		android:id="@+id/control_screen_return_button"
 		android:text="@string/return_button_text"
 		app:icon="@drawable/return_vector"
 		app:iconTint="@color/grey_return_button"
@@ -27,7 +27,7 @@
 		app:layout_constraintBottom_toTopOf="@+id/parameters_input_card"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/return_button">
+		app:layout_constraintTop_toBottomOf="@id/control_screen_return_button">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
@@ -660,6 +660,7 @@
 				app:layout_constraintTop_toBottomOf="@+id/color_picker_container">
 
 				<Button
+					android:id="@+id/control_screen_submit_button"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="12dp"
@@ -677,5 +678,4 @@
 
 	</androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
-
 	<!---->

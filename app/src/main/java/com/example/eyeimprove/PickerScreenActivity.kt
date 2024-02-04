@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,19 @@ class PickerScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.device_picker_screen)
+
+        val returnButton = findViewById<Button>(R.id.picker_return_button)
+        returnButton.setOnClickListener {
+            val intent = Intent(this, BluetoothCheckScreenActivity::class.java)
+            if (intent.resolveActivity(packageManager) != null) {
+                // Активити существует, можно использовать интент
+                startActivity(intent)
+            } else {
+                // Активити не найдена
+                Toast.makeText(this, "Activity not found", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         bluetoothManager = getSystemService(BluetoothManager::class.java) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
     }
@@ -44,9 +58,6 @@ class PickerScreenActivity : AppCompatActivity() {
         checkBluetoothPermission { isPermissionGranted ->
             if (isPermissionGranted) {
                 // Действия, которые выполняются при наличии разрешения
-                Toast.makeText(this@PickerScreenActivity,
-                    "Bluetooth permission granted!",
-                    Toast.LENGTH_SHORT).show()
                 enableBluetooth()
             } else {
                 // Действия, которые выполняются при отсутствии разрешения
