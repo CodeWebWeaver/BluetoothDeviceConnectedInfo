@@ -48,5 +48,6 @@
 	<string name="current_humidify">%</string>
 	<string name="current_temp">C°</string>
 	<string name="frequency_descr">Hz</string>
+	<string name="temp_descr">C°</string>
 
 </resources>

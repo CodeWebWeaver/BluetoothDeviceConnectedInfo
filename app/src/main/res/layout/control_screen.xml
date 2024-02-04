@@ -262,7 +262,7 @@
 						android:layout_height="wrap_content"
 						android:layout_marginTop="6dp"
 						android:fontFamily="@font/open_sans"
-						android:text=" C°"
+						android:text="@string/temp_descr"
 						android:textColor="@color/black"
 						android:textSize="16sp"
 						android:textStyle="bold"
@@ -474,6 +474,7 @@
 							android:maxLength="3"
 							android:maxLines="1"
 							android:textColor="@color/black"
+							android:textColorHint="@color/blue_edit_placeholder"
 							android:textSize="16sp"
 							android:textStyle="bold"
 							app:layout_constraintStart_toStartOf="parent"
@@ -494,10 +495,12 @@
 							android:maxLength="3"
 							android:maxLines="1"
 							android:textColor="@color/black"
+							android:textColorHint="@color/blue_edit_placeholder"
 							android:textSize="16sp"
 							android:textStyle="bold"
 							app:layout_constraintStart_toStartOf="parent"
-							app:layout_constraintTop_toBottomOf="@+id/temp_input_field" />
+							app:layout_constraintTop_toBottomOf="@+id/temp_input_field"
+							tools:ignore="TextContrastCheck" />
 
 						<EditText
 							android:id="@+id/frequency_input_field"
@@ -513,6 +516,7 @@
 							android:maxLength="3"
 							android:maxLines="1"
 							android:textColor="@color/black"
+							android:textColorHint="@color/blue_edit_placeholder"
 							android:textSize="16sp"
 							android:textStyle="bold"
 							app:layout_constraintStart_toStartOf="parent"
@@ -532,6 +536,7 @@
 							android:maxLength="3"
 							android:maxLines="1"
 							android:textColor="@color/black"
+							android:textColorHint="@color/blue_edit_placeholder"
 							android:textSize="16sp"
 							android:textStyle="bold"
 							app:layout_constraintStart_toStartOf="parent"
