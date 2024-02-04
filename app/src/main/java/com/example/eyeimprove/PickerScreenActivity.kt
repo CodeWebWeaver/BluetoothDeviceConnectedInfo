@@ -49,6 +49,18 @@ class PickerScreenActivity : AppCompatActivity() {
             }
         }
 
+        val submitButton = findViewById<Button>(R.id.picker_submit_button)
+        submitButton.setOnClickListener {
+            val intent = Intent(this, ControlPanelActivity::class.java)
+            if (intent.resolveActivity(packageManager) != null) {
+                // Активити существует, можно использовать интент
+                startActivity(intent)
+            } else {
+                // Активити не найдена
+                Toast.makeText(this, "Activity not found", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         bluetoothManager = getSystemService(BluetoothManager::class.java) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
     }
