@@ -26,6 +26,7 @@ class BluetoothCheckScreenActivity : AppCompatActivity() {
         if (result.resultCode == RESULT_OK) {
             Toast.makeText(this, "Bluetooth enabled", Toast.LENGTH_SHORT)
                 .show()
+            navigateToPickerScreen()
         } else {
             // Bluetooth not enabled, inform user
             Toast.makeText(this, "Bluetooth disabled", Toast.LENGTH_SHORT)
@@ -47,14 +48,16 @@ class BluetoothCheckScreenActivity : AppCompatActivity() {
     }
 
     fun manageBluetoothStatus() {
+        if (bluetoothAdapter.isEnabled) {
+            // Bluetooth уже включен, перейти к PickerScreen
+            navigateToPickerScreen()
+            return
+        }
+
         checkBluetoothPermission { isPermissionGranted ->
             if (isPermissionGranted) {
                 // Действия, которые выполняются при наличии разрешения
-                Toast.makeText(this@BluetoothCheckScreenActivity,
-                    "Bluetooth permission granted!",
-                    Toast.LENGTH_SHORT).show()
                 enableBluetooth()
-                navigateToPickerScreen()
             } else {
                 // Действия, которые выполняются при отсутствии разрешения
                 Toast.makeText(this@BluetoothCheckScreenActivity,
