@@ -21,21 +21,6 @@ class BluetoothCheckScreenActivity : AppCompatActivity() {
     private lateinit var bluetoothAdapter: BluetoothAdapter
 
     private val bluetoothPermissionRequestCode = 123 // Выберите код запроса по вашему усмотрению
-    private var bluetoothPermissionCallback: ((Boolean) -> Unit)? = null
-
-    val requestEnableContract = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            Toast.makeText(this, "Bluetooth enabled", Toast.LENGTH_SHORT)
-                .show()
-            navigateToPickerScreen()
-        } else {
-            // Bluetooth not enabled, inform user
-            Toast.makeText(this, "Bluetooth disabled", Toast.LENGTH_SHORT)
-                .show()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,64 +40,15 @@ class BluetoothCheckScreenActivity : AppCompatActivity() {
             // Bluetooth уже включен, перейти к PickerScreen
             navigateToPickerScreen()
             return
-        }
-
-        checkBluetoothPermission { isPermissionGranted ->
-            if (isPermissionGranted) {
-                // Действия, которые выполняются при наличии разрешения
-                enableBluetooth()
-            } else {
-                // Действия, которые выполняются при отсутствии разрешения
-                Toast.makeText(this@BluetoothCheckScreenActivity,
-                    "Bluetooth permission denied!",
-                    Toast.LENGTH_SHORT).show()
+        } else {
+            BluetoothManagerActivity().enableBluetooth()
+            if (bluetoothAdapter.isEnabled) {
+                navigateToPickerScreen()
             }
         }
     }
 
-
-    private fun checkBluetoothPermission(callback: (Boolean) -> Unit) {
-        bluetoothPermissionCallback = callback
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.BLUETOOTH_CONNECT
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // Запрос Bluetooth-разрешения
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
-                bluetoothPermissionRequestCode
-            )
-        } else {
-            // Разрешение уже предоставлено
-            callback(true)
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == bluetoothPermissionRequestCode) {
-            val isPermissionGranted =
-                grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
-            bluetoothPermissionCallback?.invoke(isPermissionGranted)
-            bluetoothPermissionCallback = null
-        }
-    }
-
-    private fun enableBluetooth() {
-        if (!bluetoothAdapter.isEnabled) {
-            // Use the contract to launch the system enable Bluetooth dialog
-            requestEnableContract.launch(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
-        }
-    }
-
-    private fun navigateToPickerScreen(){
+    fun navigateToPickerScreen() {
         val intent = Intent(this, PickerScreenActivity::class.java)
         if (intent.resolveActivity(packageManager) != null) {
             // Активити существует, можно использовать интент
