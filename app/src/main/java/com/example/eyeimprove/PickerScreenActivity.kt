@@ -1,6 +1,7 @@
 package com.example.eyeimprove
 
 import android.Manifest
+import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
@@ -8,12 +9,17 @@ import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,50 +33,63 @@ class PickerScreenActivity : AppCompatActivity() {
     private lateinit var bluetoothManager: BluetoothManager
     private val bluetoothPermissionRequestCode = 123
     private var bluetoothPermissionCallback: ((Boolean) -> Unit)? = null
-    private var connectedDevices: MutableList<BluetoothDevice> = mutableListOf()
 
-    //Communication parameters
-    private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
-    private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
-    private lateinit var bluetoothSocket: BluetoothSocket
+    private var connectedDevices: MutableList<BluetoothDevice> = mutableListOf()
+    private val connectedDevicesMap = hashMapOf<String, String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.device_picker_screen)
 
+        bluetoothManager = getSystemService(BluetoothManager::class.java) as BluetoothManager
+        bluetoothAdapter = bluetoothManager.adapter
+
         val returnButton = findViewById<Button>(R.id.picker_return_button)
         returnButton.setOnClickListener {
-            val intent = Intent(this, BluetoothCheckScreenActivity::class.java)
-            if (intent.resolveActivity(packageManager) != null) {
-                // Активити существует, можно использовать интент
-                startActivity(intent)
-            } else {
-                // Активити не найдена
-                Toast.makeText(this, "Activity not found", Toast.LENGTH_SHORT).show()
-            }
+            navigateToActivity(BluetoothCheckScreenActivity::class.java)
         }
 
         val submitButton = findViewById<Button>(R.id.picker_submit_button)
         submitButton.setOnClickListener {
-            val intent = Intent(this, ControlPanelActivity::class.java)
-            if (intent.resolveActivity(packageManager) != null) {
-                // Активити существует, можно использовать интент
-                startActivity(intent)
-            } else {
-                // Активити не найдена
-                Toast.makeText(this, "Activity not found", Toast.LENGTH_SHORT).show()
-            }
+            navigateToActivity(ControlPanelActivity::class.java)
         }
 
-        bluetoothManager = getSystemService(BluetoothManager::class.java) as BluetoothManager
-        bluetoothAdapter = bluetoothManager.adapter
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            getPairedDeviceInfo();
+        }
+
     }
 
     private suspend fun getPairedDeviceInfo() {
         // Асинхронна операція отримання списку з'єднаних пристроїв
         checkBluetoothPermission { isPermissionGranted ->
-            if (isPermissionGranted) {
+            if (isPermissionGranted && bluetoothAdapter.isEnabled) {
                 // Действия, которые выполняются при наличии разрешения
-                enableBluetooth()
+                val pairedDevices = bluetoothAdapter.bondedDevices
+
+                if (pairedDevices.isEmpty()) {
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        showToastOnMainThread("No paired Bluetooth devices found")
+                    }
+                } else {
+                    connectedDevices = pairedDevices.filter { isConnected(it) }.toMutableList()
+
+                    if (connectedDevices.isEmpty()) {
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            showToastOnMainThread("Connected Bluetooth devices not found")
+                            //displayDeviceInfo(connectedDevices)
+                        }
+                    } else {
+                        // Зміни в UI повинні відбуватися на основному потоці
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            connectedDevicesMap.putAll(connectedDevices.associateBy({ it.name }, { it.address }))
+
+                            displayDeviceInfo(connectedDevicesMap)
+                        }
+                    }
+                }
+
             } else {
                 // Действия, которые выполняются при отсутствии разрешения
                 Toast.makeText(this@PickerScreenActivity,
@@ -78,61 +97,9 @@ class PickerScreenActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             }
         }
-        val pairedDevices = bluetoothAdapter.bondedDevices
-
-        if (pairedDevices.isEmpty()) {
-            lifecycleScope.launch(Dispatchers.Main) {
-                showToastOnMainThread("No paired Bluetooth devices found")
-                //displayDeviceInfo(connectedDevices)
-            }
-        } else {
-            val connectedDevices = pairedDevices.filter { isConnected(it) }
-
-            if (connectedDevices.isEmpty()) {
-                lifecycleScope.launch(Dispatchers.Main) {
-                    showToastOnMainThread("Connected Bluetooth devices not found")
-                    //displayDeviceInfo(connectedDevices)
-                }
-            } else {
-                // Зміни в UI повинні відбуватися на основному потоці
-                lifecycleScope.launch(Dispatchers.Main) {
-                    //displayDeviceInfo(connectedDevices)
-                }
-            }
-        }
         delay(5000)
         getPairedDeviceInfo()
     }
-
-    private fun enableBluetooth() {
-        if (!bluetoothAdapter.isEnabled) {
-            // Create ActivityResultContract for enabling Bluetooth
-            val requestEnableContract = registerForActivityResult(
-                ActivityResultContracts.StartActivityForResult()
-            ) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    Toast.makeText(this, "Bluetooth enabled", Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    // Bluetooth not enabled, inform user
-                    Toast.makeText(this, "Bluetooth disabled", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-
-            // Use the contract to launch the system enable Bluetooth dialog
-            requestEnableContract.launch(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
-        }
-    }
-
-    /*private fun displayDeviceInfo(devices: List<BluetoothDevice>) {
-        checkBluetoothPermission()
-        val deviceNames = devices.joinToString("\n") { it.name ?: "Unknown" }
-        val deviceInfos = devices.joinToString("\n") { it.address ?: "None"}
-
-        bluetoothDeviceText.text = getString(R.string.bluetooth_device_text, deviceNames)
-        bluetootInfoText.text = getString(R.string.device_info_text, deviceInfos)
-    }*/
 
     private fun isConnected(device: BluetoothDevice): Boolean {
         return try {
@@ -141,6 +108,17 @@ class PickerScreenActivity : AppCompatActivity() {
         } catch (e: Exception) {
             throw IllegalStateException(e)
         }
+    }
+
+    private fun displayDeviceInfo(devices: HashMap<String, String>) {
+        // Получить ссылку на RecyclerView
+        val recyclerView = findViewById<RecyclerView>(R.id.connected_devices_recycler_view)
+
+        // Создать адаптер
+        val adapter = DevicesAdapter(devices)
+
+        // Установить адаптер для RecyclerView
+        recyclerView.adapter = adapter
     }
 
     private fun checkBluetoothPermission(callback: (Boolean) -> Unit) {
@@ -167,8 +145,8 @@ class PickerScreenActivity : AppCompatActivity() {
         Toast.makeText(this@PickerScreenActivity, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun navigateToBluetoothCheckScreen(){
-        val intent = Intent(this, BluetoothCheckScreenActivity::class.java)
+    private fun navigateToActivity(destinationActivity: Class<out Activity>) {
+        val intent = Intent(this, destinationActivity)
         if (intent.resolveActivity(packageManager) != null) {
             // Активити существует, можно использовать интент
             startActivity(intent)
@@ -178,14 +156,28 @@ class PickerScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToControlPanelScreen(){
-        val intent = Intent(this, ControlPanelActivity::class.java)
-        if (intent.resolveActivity(packageManager) != null) {
-            // Активити существует, можно использовать интент
-            startActivity(intent)
-        } else {
-            // Активити не найдена
-            Toast.makeText(this, "Activity not found", Toast.LENGTH_SHORT).show()
+    class DevicesAdapter(private val dataSet: HashMap<String, String>) :
+        RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
+
+        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val deviceName: TextView = view.findViewById(R.id.device_name)
+            val deviceAddress: TextView = view.findViewById(R.id.device_address)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.device_card, parent, false)
+            return ViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val item = dataSet.entries.toList()[position]
+            holder.deviceName.text = item.key
+            holder.deviceAddress.text = item.value
+        }
+
+        override fun getItemCount(): Int {
+            return dataSet.size
         }
     }
 }
