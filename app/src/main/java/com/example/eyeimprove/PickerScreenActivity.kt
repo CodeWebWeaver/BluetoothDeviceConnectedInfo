@@ -33,6 +33,9 @@ class PickerScreenActivity : AppCompatActivity(), DevicesAdapter.OnDeviceClickLi
     private var connectedDevices: MutableList<BluetoothDevice> = mutableListOf()
     private val connectedDevicesMap = hashMapOf<String, String>()
 
+    private var selectedDevice: BluetoothDevice? = null
+
+
     private val bluetoothReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val action = intent?.action
@@ -97,8 +100,20 @@ class PickerScreenActivity : AppCompatActivity(), DevicesAdapter.OnDeviceClickLi
 
         val submitButton = findViewById<Button>(R.id.picker_submit_button)
         submitButton.setOnClickListener {
-            navigateToActivity(ControlPanelActivity::class.java)
+            selectedDevice?.let { device ->
+                val intent = Intent(this, ControlPanelActivity::class.java).apply {
+                    putExtra("selectedDeviceAddress", device.address) // Передача адреса устройства
+                }
+                if (intent.resolveActivity(packageManager) != null) {
+                    // Активити существует, можно использовать интент
+                    startActivity(intent)
+                } else {
+                    // Активити не найдена
+                    Toast.makeText(this, "Activity not found", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
+
 
         val combinedFilter = IntentFilter().apply {
             addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
@@ -199,5 +214,6 @@ class PickerScreenActivity : AppCompatActivity(), DevicesAdapter.OnDeviceClickLi
 
     override fun onDeviceClick(deviceAddress: String) {
         Log.i("INFO", "Було натиснуто пристрій ${connectedDevicesMap.get(deviceAddress)} \n з адресом $deviceAddress")
+        selectedDevice = connectedDevices.firstOrNull { it.address == deviceAddress }
     }
 }
