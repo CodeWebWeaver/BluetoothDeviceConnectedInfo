@@ -4,6 +4,6 @@
         <color android:color="@color/green_card_pressed" />
     </item>
     <item>
-        <color android:color="@color/_bg__device_info_ek1_color" />
+        <color android:color="@color/ard_normal_green" />
     </item>
 </selector>

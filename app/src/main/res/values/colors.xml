@@ -26,7 +26,7 @@
 	<color name="_bg__description_ek1_color">#E3EFE7</color>
 	<color name="greenColor">#29492E</color>
 	<color name="green_card_pressed">#779489</color>
-	<color name="_bg__device_info_ek1_color">#75B09B</color>
+	<color name="ard_normal_green">#75B09B</color>
 	<color name="slider_space_color">#8E8E8E</color>
 	<color name="slider_ek2_color">#3C3C3C</color>
 

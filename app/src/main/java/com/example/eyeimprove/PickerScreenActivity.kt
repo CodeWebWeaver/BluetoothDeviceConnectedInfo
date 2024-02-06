@@ -1,5 +1,6 @@
 package com.example.eyeimprove
 
+import DevicesAdapter
 import android.Manifest
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
@@ -11,11 +12,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.lang.reflect.Method
 
-class PickerScreenActivity : AppCompatActivity() {
+class PickerScreenActivity : AppCompatActivity(), DevicesAdapter.OnDeviceClickListener {
 
     //Connection Parameters
     private lateinit var bluetoothAdapter: BluetoothAdapter
@@ -53,7 +51,7 @@ class PickerScreenActivity : AppCompatActivity() {
                                 connectedDevicesMap[device.address] = device.name
                                 runOnUiThread {
                                     // Обновите список устройств на UI*******************
-                                    updateRecyclerView()
+                                    updateOrDisplayDeviceInfo(connectedDevicesMap)
                                 }
 
                             }
@@ -63,7 +61,7 @@ class PickerScreenActivity : AppCompatActivity() {
                                 connectedDevicesMap.remove(device.address)
                                 runOnUiThread {
                                     // Обновите список устройств на UI*******************
-                                    updateRecyclerView()
+                                    updateOrDisplayDeviceInfo(connectedDevicesMap)
                                 }
                             }
                         }
@@ -126,7 +124,7 @@ class PickerScreenActivity : AppCompatActivity() {
                     } else {
                         // Зміни в UI повинні відбуватися на основному потоці
                         connectedDevicesMap.putAll(connectedDevices.associateBy({ it.address }, { it.name }))
-                        displayDeviceInfo(connectedDevicesMap)
+                        updateOrDisplayDeviceInfo(connectedDevicesMap)
                     }
                 }
 
@@ -148,26 +146,16 @@ class PickerScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayDeviceInfo(devices: HashMap<String, String>) {
-        // Получить ссылку на RecyclerView
+    private fun updateOrDisplayDeviceInfo(devices: HashMap<String, String>) {
         val recyclerView = findViewById<RecyclerView>(R.id.connected_devices_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Создать адаптер
-        val adapter = DevicesAdapter(devices)
+        val adapter = recyclerView.adapter as? DevicesAdapter ?: DevicesAdapter(devices)
+        adapter.setOnDeviceClickListener(this)
+        adapter.updateData(devices)
 
-        // Установить адаптер для RecyclerView
         recyclerView.adapter = adapter
-
-        // Уведомить адаптер об изменениях в данных
         adapter.notifyDataSetChanged()
-    }
-
-    private fun updateRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.connected_devices_recycler_view)
-        val adapter = recyclerView.adapter as? DevicesAdapter
-        adapter?.updateData(connectedDevicesMap)
-        adapter?.notifyDataSetChanged() // Notify the adapter about the change
     }
 
     private fun checkBluetoothPermission() {
@@ -209,33 +197,7 @@ class PickerScreenActivity : AppCompatActivity() {
         }
     }
 
-    class DevicesAdapter(private val dataSet: HashMap<String, String>) :
-        RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
-
-        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val deviceName: TextView = view.findViewById(R.id.device_name)
-            val deviceAddress: TextView = view.findViewById(R.id.device_address)
-        }
-
-        fun updateData(newData: HashMap<String, String>) {
-            dataSet.putAll(newData)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.device_card, parent, false)
-            return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val item = dataSet.entries.toList()[position]
-            holder.deviceName.text = item.value
-            holder.deviceAddress.text = item.key
-        }
-
-        override fun getItemCount(): Int {
-            return dataSet.size
-        }
+    override fun onDeviceClick(deviceAddress: String) {
+        Log.i("INFO", "Було натиснуто пристрій ${connectedDevicesMap.get(deviceAddress)} \n з адресом $deviceAddress")
     }
-
 }
