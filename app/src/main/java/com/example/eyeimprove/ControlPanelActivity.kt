@@ -80,26 +80,11 @@ class ControlPanelActivity : AppCompatActivity() {
         setContentView(R.layout.control_screen)
 
         checkBluetoothPermission()
-
         bluetoothManager = getSystemService(BluetoothManager::class.java) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
 
         connectedDeviceAddress = intent.getStringExtra("selectedDeviceAddress")
-
-        val pairedDevices = bluetoothAdapter.bondedDevices
-
-        if (pairedDevices.isEmpty()) {
-            showToast("No paired Bluetooth devices found")
-        } else {
-            connectedDevices = pairedDevices.filter { isConnected(it) }.toMutableList()
-
-            if (connectedDevices.isEmpty()) {
-                showToast("Connected Bluetooth devices not found")
-                // return to prev screen
-            } else {
-                connectedDevice = connectedDevices.firstOrNull { it.address == connectedDeviceAddress }
-            }
-        }
+        connectedDevice = getConnectedDevise(connectedDeviceAddress)
 
         Log.i("INFO", "Було отримано пристрій ${connectedDevice?.name} \n з адресом ${connectedDevice?.address}")
 
@@ -119,6 +104,13 @@ class ControlPanelActivity : AppCompatActivity() {
         submitButton.setOnClickListener {
 
         }
+    }
+
+    private fun getConnectedDevise(address: String?): BluetoothDevice? {
+        checkBluetoothPermission()
+        return bluetoothAdapter.bondedDevices
+            .filter { isConnected(it) }
+            .firstOrNull { it.address == address }
     }
 
     private fun checkBluetoothPermission() {
