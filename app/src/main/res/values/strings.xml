@@ -34,19 +34,28 @@
 	<string name="humidify_output">Вологість (φ) =</string>
 	<string name="frequency_output">Частота світла (f) =</string>
 	<string name="temp_output">Температура (t) =</string>
+
 	<string name="reset_input_str">0</string>
-	<string name="frequency_input_descr">10–900 Hz</string>
-	<string name="humidify_input_descr">50–80 %</string>
+
 	<string name="temp_input_descr">15–25 C°</string>
+	<string name="humidify_input_descr">50–80 %</string>
+	<string name="frequency_input_descr">10–900 Hz</string>
+
 	<string name="ligth_intensity_input">Яскравість (%) =</string>
 	<string name="color_name">Колір :</string>
 	<string name="color_output">Колір =</string>
-	<string name="current_color">color</string>
-	<string name="current_light_intencity">%</string>
-	<string name="current_frequency">Hz</string>
+
+	<string name="current_light_intencity">-</string>
+	<string name="current_frequency">-</string>
+	<string name="current_humidify">-</string>
+	<string name="current_temp">-</string>
+
+	<string name="reset_light_intencity">-</string>
+	<string name="reset_frequency">-</string>
+	<string name="reset_humidify">-</string>
+	<string name="reset_temp">-</string>
+
 	<string name="percentage">%</string>
-	<string name="current_humidify">%</string>
-	<string name="current_temp">C°</string>
 	<string name="frequency_descr">Hz</string>
 	<string name="temp_descr">C°</string>
 
