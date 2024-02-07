@@ -27,6 +27,9 @@ import androidx.cardview.widget.CardView
 import com.example.eyeimprove.databinding.ControlScreenBinding
 import java.lang.reflect.Method
 import java.util.UUID
+import org.json.JSONArray
+import org.json.JSONObject
+
 
 class ControlPanelActivity : AppCompatActivity() {
 
@@ -59,6 +62,7 @@ class ControlPanelActivity : AppCompatActivity() {
     private var color_input : String? = null // null or something
 
     /** Outputs to Device  */
+    val parametersMap = HashMap<String, Any?>()
     // Views outputs
     private lateinit var temp_input_field : EditText
     private lateinit var humidify_input_field : EditText
@@ -151,7 +155,15 @@ class ControlPanelActivity : AppCompatActivity() {
         val submitButton = findViewById<Button>(R.id.control_screen_submit_button)
         submitButton.setOnClickListener {
             gatherInputs()
+            sendInputs()
         }
+    }
+
+    private fun sendInputs() {
+        val json = JSONObject(parametersMap)
+
+        //Checking
+        val jsonString = json.toString()
     }
 
     private fun gatherInputs() {
@@ -160,6 +172,11 @@ class ControlPanelActivity : AppCompatActivity() {
         frequency_output = validateAndGatherInput(frequency_input_field, 10, 900) // 10 - 900
         light_intensity_output = validateAndGatherInput(light_intensity_input_field, 0, 100) //0 - 1
 
+        parametersMap["temperature"] = temperature_output
+        parametersMap["humidify"] = humidify_output
+        parametersMap["frequency"] = frequency_output
+        parametersMap["light_intensity"] = light_intensity_output
+        parametersMap["color"] = selectedColor.hex
     }
 
     private fun validateAndGatherInput(editText: EditText?, minValue: Int, maxValue: Int): Int? {
@@ -302,5 +319,7 @@ class ControlPanelActivity : AppCompatActivity() {
         humidify_input_field.text = null
         frequency_input_field.text = null
         light_intensity_input_field.text = null
+
+        parametersMap.clear()
     }
 }
