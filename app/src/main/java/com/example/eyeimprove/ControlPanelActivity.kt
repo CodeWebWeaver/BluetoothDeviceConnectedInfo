@@ -27,7 +27,6 @@ import androidx.cardview.widget.CardView
 import com.example.eyeimprove.databinding.ControlScreenBinding
 import java.lang.reflect.Method
 import java.util.UUID
-import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -48,34 +47,34 @@ class ControlPanelActivity : AppCompatActivity() {
 
     /** Inputs from connected Device  */
     //Views Inputs
-    private lateinit var temp_output_filler : TextView
-    private lateinit var humidify_output_filler : TextView
-    private lateinit var frequency_output_filler : TextView
-    private lateinit var light_intensity_output_filler : TextView
-    private lateinit var color_input_card : CardView
+    private lateinit var tempOutputFiller : TextView
+    private lateinit var humidifyOutputFiller : TextView
+    private lateinit var frequencyOutputFiller : TextView
+    private lateinit var lightIntensityOutputFiller : TextView
+    private lateinit var colorInputCard : CardView
 
     // Params inputs
-    private var temperature_input : Int? = null // null or something
-    private var humidify_input : Int? = null // null or something
-    private var frequency_input : Int? = null // null or something
-    private var light_intensity_input : Int? = null // null or something
-    private var color_input : String? = null // null or something
+    private var temperatureInput : Int? = null // null or something
+    private var humidifyInput : Int? = null // null or something
+    private var frequencyInput : Int? = null // null or something
+    private var lightIntensityInput : Int? = null // null or something
+    private var colorInput : String? = null // null or something
 
     /** Outputs to Device  */
     val parametersMap = HashMap<String, Any?>()
     // Views outputs
-    private lateinit var temp_input_field : EditText
-    private lateinit var humidify_input_field : EditText
-    private lateinit var frequency_input_field : EditText
-    private lateinit var light_intensity_input_field : EditText
+    private lateinit var tempInputField : EditText
+    private lateinit var humidifyInputField : EditText
+    private lateinit var frequencyInputField : EditText
+    private lateinit var lightIntensityInputField : EditText
     private lateinit var colorSpinner : Spinner
 
     // Params outputs
-    private var temperature_output : Int? = null // 15-25
-    private var humidify_output : Int? = null //0 - 1
-    private var frequency_output : Int? = null //10 - 900
-    private var light_intensity_output : Int? = null //0 - 1
-    private var color_output : String? = null //#252525
+    private var temperatureOutput : Int? = null // 15-25
+    private var humidifyOutput : Int? = null //0 - 1
+    private var frequencyOutput : Int? = null //10 - 900
+    private var lightIntensityOutput : Int? = null //0 - 1
+    private var colorOutput : String? = null //#252525
 
     // Color Spinner
     lateinit var binding: ControlScreenBinding
@@ -142,14 +141,7 @@ class ControlPanelActivity : AppCompatActivity() {
 
         val returnButton = findViewById<Button>(R.id.control_screen_return_button)
         returnButton.setOnClickListener {
-            val intent = Intent(this, PickerScreenActivity::class.java)
-            if (intent.resolveActivity(packageManager) != null) {
-                // Активити существует, можно использовать интент
-                startActivity(intent)
-            } else {
-                // Активити не найдена
-                Toast.makeText(this, "Activity not found", Toast.LENGTH_SHORT).show()
-            }
+            navigateToActivity(PickerScreenActivity::class.java)
         }
 
         val submitButton = findViewById<Button>(R.id.control_screen_submit_button)
@@ -167,15 +159,15 @@ class ControlPanelActivity : AppCompatActivity() {
     }
 
     private fun gatherInputs() {
-        temperature_output = validateAndGatherInput(temp_input_field, 15, 25) // 15-25
-        humidify_output = validateAndGatherInput(humidify_input_field, 0, 100) //0 - 1
-        frequency_output = validateAndGatherInput(frequency_input_field, 10, 900) // 10 - 900
-        light_intensity_output = validateAndGatherInput(light_intensity_input_field, 0, 100) //0 - 1
+        temperatureOutput = validateAndGatherInput(tempInputField, 15, 25) // 15-25
+        humidifyOutput = validateAndGatherInput(humidifyInputField, 0, 100) //0 - 1
+        frequencyOutput = validateAndGatherInput(frequencyInputField, 10, 900) // 10 - 900
+        lightIntensityOutput = validateAndGatherInput(lightIntensityInputField, 0, 100) //0 - 1
 
-        parametersMap["temperature"] = temperature_output
-        parametersMap["humidify"] = humidify_output
-        parametersMap["frequency"] = frequency_output
-        parametersMap["light_intensity"] = light_intensity_output
+        parametersMap["temperature"] = temperatureOutput
+        parametersMap["humidify"] = humidifyOutput
+        parametersMap["frequency"] = frequencyOutput
+        parametersMap["light_intensity"] = lightIntensityOutput
         parametersMap["color"] = selectedColor.hex
     }
 
@@ -189,17 +181,17 @@ class ControlPanelActivity : AppCompatActivity() {
         val inputValue = input.toIntOrNull()
         if (inputValue == null) {
             // Если ввод пользователя не удалось преобразовать в Int, подчеркиваем поле другим цветом
-            editText?.backgroundTintList = ColorStateList.valueOf(Color.RED)
+            editText.backgroundTintList = ColorStateList.valueOf(Color.RED)
             return null
         }
 
         if (inputValue !in minValue..maxValue) {
             // Если ввод пользователя не входит в диапазон, подчеркиваем поле другим цветом
-            editText?.backgroundTintList = ColorStateList.valueOf(Color.RED)
+            editText.backgroundTintList = ColorStateList.valueOf(Color.RED)
             return null
         }
 
-        editText?.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
+        editText.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
         return inputValue
     }
 
@@ -213,7 +205,7 @@ class ControlPanelActivity : AppCompatActivity() {
     }
 
     private fun checkBluetoothPermission() {
-        bluetoothPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT)
+        bluetoothPermissionLauncher.launch(Manifest.permission.BLUETOOTH)
     }
 
     private fun showToast(message: String) {
@@ -260,65 +252,65 @@ class ControlPanelActivity : AppCompatActivity() {
 
     private fun initializeParams() {
         // Инициализация полей ввода
-        temp_input_field = findViewById(R.id.temp_input_field)
-        humidify_input_field = findViewById(R.id.humidify_input_field)
-        frequency_input_field = findViewById(R.id.frequency_input_field)
-        light_intensity_input_field = findViewById(R.id.light_intensity_input_field)
+        tempInputField = findViewById(R.id.temp_input_field)
+        humidifyInputField = findViewById(R.id.humidify_input_field)
+        frequencyInputField = findViewById(R.id.frequency_input_field)
+        lightIntensityInputField = findViewById(R.id.light_intensity_input_field)
         colorSpinner = findViewById(R.id.colorSpinner)
 
         // Инициализация полей вывода
-        temp_output_filler = findViewById(R.id.temp_output_filler)
-        humidify_output_filler = findViewById(R.id.humidify_output_filler)
-        frequency_output_filler = findViewById(R.id.frequency_output_filler)
-        light_intensity_output_filler = findViewById(R.id.light_intensity_output_filler)
-        color_input_card = findViewById(R.id.color_input_card)
+        tempOutputFiller = findViewById(R.id.temp_output_filler)
+        humidifyOutputFiller = findViewById(R.id.humidify_output_filler)
+        frequencyOutputFiller = findViewById(R.id.frequency_output_filler)
+        lightIntensityOutputFiller = findViewById(R.id.light_intensity_output_filler)
+        colorInputCard = findViewById(R.id.color_input_card)
 
-        temp_output_filler.text = getString(R.string.current_temp)
-        humidify_output_filler.text  = getString(R.string.reset_humidify)
-        frequency_output_filler.text  = getString(R.string.reset_frequency)
-        light_intensity_output_filler.text  = getString(R.string.reset_light_intencity)
-        color_input_card.setCardBackgroundColor(getResources().getColor(R.color.reset_input_color))
+        tempOutputFiller.text = getString(R.string.current_temp)
+        humidifyOutputFiller.text  = getString(R.string.reset_humidify)
+        frequencyOutputFiller.text  = getString(R.string.reset_frequency)
+        lightIntensityOutputFiller.text  = getString(R.string.reset_light_intencity)
+        colorInputCard.setCardBackgroundColor(getResources().getColor(R.color.reset_input_color))
 
         // Сброс параметров
-        temperature_input = null
-        humidify_input = null
-        frequency_input = null
-        light_intensity_input = null
-        color_input = null
+        temperatureInput = null
+        humidifyInput = null
+        frequencyInput = null
+        lightIntensityInput = null
+        colorInput = null
 
         // Сброс выходных параметров
-        temperature_output = null
-        humidify_output = null
-        frequency_output = null
-        light_intensity_output = null
-        color_output = null
+        temperatureOutput = null
+        humidifyOutput = null
+        frequencyOutput = null
+        lightIntensityOutput = null
+        colorOutput = null
     }
 
     private fun resetParams() {
         // Сброс параметров
-        temperature_input = null
-        humidify_input = null
-        frequency_input = null
-        light_intensity_input = null
-        color_input = null
+        temperatureInput = null
+        humidifyInput = null
+        frequencyInput = null
+        lightIntensityInput = null
+        colorInput = null
 
         // Сброс выходных параметров
-        temperature_output = null
-        humidify_output = null
-        frequency_output = null
-        light_intensity_output = null
-        color_output = null
+        temperatureOutput = null
+        humidifyOutput = null
+        frequencyOutput = null
+        lightIntensityOutput = null
+        colorOutput = null
 
-        temp_output_filler.text = getString(R.string.current_temp)
-        humidify_output_filler.text  = getString(R.string.reset_humidify)
-        frequency_output_filler.text  = getString(R.string.reset_frequency)
-        light_intensity_output_filler.text  = getString(R.string.reset_light_intencity)
-        color_input_card.setCardBackgroundColor(getResources().getColor(R.color.reset_input_color))
+        tempOutputFiller.text = getString(R.string.current_temp)
+        humidifyOutputFiller.text  = getString(R.string.reset_humidify)
+        frequencyOutputFiller.text  = getString(R.string.reset_frequency)
+        lightIntensityOutputFiller.text  = getString(R.string.reset_light_intencity)
+        colorInputCard.setCardBackgroundColor(resources.getColor(R.color.reset_input_color))
 
-        temp_input_field.text = null
-        humidify_input_field.text = null
-        frequency_input_field.text = null
-        light_intensity_input_field.text = null
+        tempInputField.text = null
+        humidifyInputField.text = null
+        frequencyInputField.text = null
+        lightIntensityInputField.text = null
 
         parametersMap.clear()
     }

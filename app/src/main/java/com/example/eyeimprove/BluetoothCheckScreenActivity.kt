@@ -3,10 +3,7 @@ package com.example.eyeimprove
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
@@ -20,10 +17,10 @@ class BluetoothCheckScreenActivity : AppCompatActivity() {
     private lateinit var bluetoothManager: BluetoothManager
     private lateinit var bluetoothAdapter: BluetoothAdapter
 
-    private val bluetoothPermissionRequestCode = 123 // Выберите код запроса по вашему усмотрению
+    private val bluetoothPermissionRequestCode = 123
     private var bluetoothPermissionCallback: ((Boolean) -> Unit)? = null
 
-    val requestEnableContract = registerForActivityResult(
+    private val requestEnableContract = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -50,19 +47,16 @@ class BluetoothCheckScreenActivity : AppCompatActivity() {
         }
     }
 
-    fun manageBluetoothStatus() {
+    private fun manageBluetoothStatus() {
         if (bluetoothAdapter.isEnabled) {
-            // Bluetooth уже включен, перейти к PickerScreen
             navigateToPickerScreen()
             return
         }
 
         checkBluetoothPermission { isPermissionGranted ->
             if (isPermissionGranted) {
-                // Действия, которые выполняются при наличии разрешения
                 enableBluetooth()
             } else {
-                // Действия, которые выполняются при отсутствии разрешения
                 Toast.makeText(this@BluetoothCheckScreenActivity,
                     "Bluetooth permission denied!",
                     Toast.LENGTH_SHORT).show()
@@ -76,13 +70,13 @@ class BluetoothCheckScreenActivity : AppCompatActivity() {
 
         if (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.BLUETOOTH_CONNECT
+                Manifest.permission.BLUETOOTH
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             // Запрос Bluetooth-разрешения
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
+                arrayOf(Manifest.permission.BLUETOOTH),
                 bluetoothPermissionRequestCode
             )
         } else {
