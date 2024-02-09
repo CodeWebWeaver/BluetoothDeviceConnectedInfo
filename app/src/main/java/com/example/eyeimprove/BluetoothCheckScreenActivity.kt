@@ -41,8 +41,8 @@ class BluetoothCheckScreenActivity : AppCompatActivity() {
         bluetoothManager = getSystemService(BluetoothManager::class.java) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
 
-        val bluetoothCheckButton : Button = findViewById(R.id.bluetoothCheckButton)
-        bluetoothCheckButton.setOnClickListener{
+        val bluetoothCheckButton: Button = findViewById(R.id.bluetoothCheckButton)
+        bluetoothCheckButton.setOnClickListener {
             manageBluetoothStatus()
         }
     }
@@ -57,9 +57,11 @@ class BluetoothCheckScreenActivity : AppCompatActivity() {
             if (isPermissionGranted) {
                 enableBluetooth()
             } else {
-                Toast.makeText(this@BluetoothCheckScreenActivity,
+                Toast.makeText(
+                    this@BluetoothCheckScreenActivity,
                     "Bluetooth permission denied!",
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -106,7 +108,7 @@ class BluetoothCheckScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToPickerScreen(){
+    private fun navigateToPickerScreen() {
         val intent = Intent(this, PickerScreenActivity::class.java)
         if (intent.resolveActivity(packageManager) != null) {
             // Активити существует, можно использовать интент

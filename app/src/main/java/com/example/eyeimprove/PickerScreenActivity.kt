@@ -134,16 +134,22 @@ class PickerScreenActivity : AppCompatActivity(), DevicesAdapter.OnDeviceClickLi
                         showToast("Connected Bluetooth devices not found")
                     } else {
                         // Зміни в UI повинні відбуватися на основному потоці
-                        connectedDevicesMap.putAll(connectedDevices.associateBy({ it.address }, { it.name }))
+                        connectedDevicesMap.putAll(
+                            connectedDevices.associateBy(
+                                { it.address },
+                                { it.name })
+                        )
                         updateOrDisplayDeviceInfo(connectedDevicesMap)
                     }
                 }
 
             } else {
                 // Действия, которые выполняются при отсутствии разрешения
-                Toast.makeText(this@PickerScreenActivity,
+                Toast.makeText(
+                    this@PickerScreenActivity,
                     "Bluetooth permission denied!",
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -209,7 +215,10 @@ class PickerScreenActivity : AppCompatActivity(), DevicesAdapter.OnDeviceClickLi
     }
 
     override fun onDeviceClick(deviceAddress: String) {
-        Log.i("INFO", "Було натиснуто пристрій ${connectedDevicesMap.get(deviceAddress)} \n з адресом $deviceAddress")
+        Log.i(
+            "INFO",
+            "Було натиснуто пристрій ${connectedDevicesMap.get(deviceAddress)} \n з адресом $deviceAddress"
+        )
         selectedDevice = connectedDevices.firstOrNull { it.address == deviceAddress }
     }
 }

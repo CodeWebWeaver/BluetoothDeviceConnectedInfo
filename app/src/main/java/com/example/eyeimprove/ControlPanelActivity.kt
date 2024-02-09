@@ -32,8 +32,8 @@ import org.json.JSONObject
 
 class ControlPanelActivity : AppCompatActivity() {
 
-    private var connectedDeviceAddress:  String? = null
-    private var connectedDevice : BluetoothDevice? = null
+    private var connectedDeviceAddress: String? = null
+    private var connectedDevice: BluetoothDevice? = null
 
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private lateinit var bluetoothManager: BluetoothManager
@@ -41,43 +41,44 @@ class ControlPanelActivity : AppCompatActivity() {
     private var connectedDevices: MutableList<BluetoothDevice> = mutableListOf()
 
     //Communication parameters
-    private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
+    private val UUID_STRING_WELL_KNOWN: String = "00001101-0000-1000-2000-00805F9B34FB"
     private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
     private lateinit var bluetoothSocket: BluetoothSocket
 
     /** Inputs from connected Device  */
     //Views Inputs
-    private lateinit var tempOutputFiller : TextView
-    private lateinit var humidifyOutputFiller : TextView
-    private lateinit var frequencyOutputFiller : TextView
-    private lateinit var lightIntensityOutputFiller : TextView
-    private lateinit var colorInputCard : CardView
+    private lateinit var tempOutputFiller: TextView
+    private lateinit var humidifyOutputFiller: TextView
+    private lateinit var frequencyOutputFiller: TextView
+    private lateinit var lightIntensityOutputFiller: TextView
+    private lateinit var colorInputCard: CardView
 
     // Params inputs
-    private var temperatureInput : Int? = null // null or something
-    private var humidifyInput : Int? = null // null or something
-    private var frequencyInput : Int? = null // null or something
-    private var lightIntensityInput : Int? = null // null or something
-    private var colorInput : String? = null // null or something
+    private var temperatureInput: Int? = null // null or something
+    private var humidifyInput: Int? = null // null or something
+    private var frequencyInput: Int? = null // null or something
+    private var lightIntensityInput: Int? = null // null or something
+    private var colorInput: String? = null // null or something
 
     /** Outputs to Device  */
-    val parametersMap = HashMap<String, Any?>()
+    private val parametersMap = HashMap<String, Any?>()
+
     // Views outputs
-    private lateinit var tempInputField : EditText
-    private lateinit var humidifyInputField : EditText
-    private lateinit var frequencyInputField : EditText
-    private lateinit var lightIntensityInputField : EditText
-    private lateinit var colorSpinner : Spinner
+    private lateinit var tempInputField: EditText
+    private lateinit var humidifyInputField: EditText
+    private lateinit var frequencyInputField: EditText
+    private lateinit var lightIntensityInputField: EditText
+    private lateinit var colorSpinner: Spinner
 
     // Params outputs
-    private var temperatureOutput : Int? = null // 15-25
-    private var humidifyOutput : Int? = null //0 - 1
-    private var frequencyOutput : Int? = null //10 - 900
-    private var lightIntensityOutput : Int? = null //0 - 1
-    private var colorOutput : String? = null //#252525
+    private var temperatureOutput: Int? = null // 15-25
+    private var humidifyOutput: Int? = null //0 - 1
+    private var frequencyOutput: Int? = null //10 - 900
+    private var lightIntensityOutput: Int? = null //0 - 1
+    private var colorOutput: String? = null //#252525
 
     // Color Spinner
-    lateinit var binding: ControlScreenBinding
+    private lateinit var binding: ControlScreenBinding
     lateinit var selectedColor: ColorObject
 
 
@@ -93,13 +94,12 @@ class ControlPanelActivity : AppCompatActivity() {
 
     private val bluetoothReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            val action = intent?.action
-
-            when (action) {
+            when (intent?.action) {
                 BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
                     val device =
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE) as? BluetoothDevice?
                     if (device?.address == connectedDeviceAddress) {
+                        showToast("Disconnected with current device!")
                         navigateToActivity(PickerScreenActivity::class.java)
                     }
                 }
@@ -116,6 +116,7 @@ class ControlPanelActivity : AppCompatActivity() {
 
         initializeParams()
     }
+
     override fun onStop() {
         super.onStop()
         unregisterReceiver(bluetoothReceiver)
@@ -134,8 +135,10 @@ class ControlPanelActivity : AppCompatActivity() {
         bluetoothAdapter = bluetoothManager.adapter
 
         connectedDevice = getConnectedDevice()
-        Log.i("INFO", "Було отримано пристрій ${connectedDevice?.name}" +
-                " \n з адресом ${connectedDevice?.address}")
+        Log.i(
+            "INFO", "Було отримано пристрій ${connectedDevice?.name}" +
+                    " \n з адресом ${connectedDevice?.address}"
+        )
 
         val returnButton = findViewById<Button>(R.id.control_screen_return_button)
         returnButton.setOnClickListener {
@@ -144,6 +147,7 @@ class ControlPanelActivity : AppCompatActivity() {
 
         val submitButton = findViewById<Button>(R.id.control_screen_submit_button)
         submitButton.setOnClickListener {
+            clearEditFocus()
             gatherInputs()
             sendInputs()
         }
@@ -167,6 +171,13 @@ class ControlPanelActivity : AppCompatActivity() {
         parametersMap["frequency"] = frequencyOutput
         parametersMap["light_intensity"] = lightIntensityOutput
         parametersMap["color"] = selectedColor.hex
+    }
+
+    private fun clearEditFocus() {
+        tempInputField.clearFocus()
+        humidifyInputField.clearFocus()
+        frequencyInputField.clearFocus()
+        lightIntensityInputField.clearFocus()
     }
 
     private fun validateAndGatherInput(editText: EditText?, minValue: Int, maxValue: Int): Int? {
@@ -230,16 +241,18 @@ class ControlPanelActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadColorSpinner()
-    {
+    private fun loadColorSpinner() {
         selectedColor = ColorList().defaultColor
         binding.colorSpinner.apply {
             adapter = ColorSpinnerAdapter(applicationContext, ColorList().basicColors())
             setSelection(ColorList().colorPosition(selectedColor), false)
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener
-            {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long)
-                {
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    p0: AdapterView<*>?,
+                    p1: View?,
+                    position: Int,
+                    p3: Long
+                ) {
                     selectedColor = ColorList().basicColors()[position]
                 }
 
@@ -264,10 +277,10 @@ class ControlPanelActivity : AppCompatActivity() {
         colorInputCard = findViewById(R.id.color_input_card)
 
         tempOutputFiller.text = getString(R.string.current_temp)
-        humidifyOutputFiller.text  = getString(R.string.reset_humidify)
-        frequencyOutputFiller.text  = getString(R.string.reset_frequency)
-        lightIntensityOutputFiller.text  = getString(R.string.reset_light_intencity)
-        colorInputCard.setCardBackgroundColor(getResources().getColor(R.color.reset_input_color))
+        humidifyOutputFiller.text = getString(R.string.reset_humidify)
+        frequencyOutputFiller.text = getString(R.string.reset_frequency)
+        lightIntensityOutputFiller.text = getString(R.string.reset_light_intencity)
+        colorInputCard.setCardBackgroundColor(resources.getColor(R.color.reset_input_color))
     }
 
     private fun resetParams() {
