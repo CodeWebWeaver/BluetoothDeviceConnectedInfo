@@ -5,7 +5,6 @@ import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
-import android.bluetooth.BluetoothSocket
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -26,12 +25,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.eyeimprove.databinding.ControlScreenBinding
 import java.lang.reflect.Method
-import java.util.UUID
 import org.json.JSONObject
 
 
 class ControlPanelActivity : AppCompatActivity() {
 
+    private val activityTag = "ControlPanelActivity"
+
+    //Communication parameters
+    private var bluetoothCommunication : BluetoothCommunication? = null
     private var connectedDeviceAddress: String? = null
     private var connectedDevice: BluetoothDevice? = null
 
@@ -40,10 +42,7 @@ class ControlPanelActivity : AppCompatActivity() {
 
     private var connectedDevices: MutableList<BluetoothDevice> = mutableListOf()
 
-    //Communication parameters
-    private val UUID_STRING_WELL_KNOWN: String = "00001101-0000-1000-2000-00805F9B34FB"
-    private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
-    private lateinit var bluetoothSocket: BluetoothSocket
+
 
     /** Inputs from connected Device  */
     //Views Inputs
@@ -116,6 +115,21 @@ class ControlPanelActivity : AppCompatActivity() {
         registerReceiver(bluetoothReceiver, filter)
 
         initializeParams()
+
+        bluetoothCommunication = connectedDevice?.let { BluetoothCommunication(it) }
+        bluetoothCommunication?.connect()
+
+        val submitButton = findViewById<Button>(R.id.control_screen_submit_button)
+        submitButton.setOnClickListener {
+            clearEditFocus()
+            gatherInputs()
+            jsonDesiredParams?.let { it1 -> bluetoothCommunication?.sendData(it1) }
+        }
+
+        bluetoothCommunication?.receiveData { receivedData ->
+            Log.i(activityTag, "data received: $receivedData")
+            updateReceiveUI(receivedData)
+        }
     }
 
     override fun onStop() {
@@ -123,6 +137,8 @@ class ControlPanelActivity : AppCompatActivity() {
         unregisterReceiver(bluetoothReceiver)
 
         resetParams()
+
+        bluetoothCommunication?.disconnect()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,20 +161,6 @@ class ControlPanelActivity : AppCompatActivity() {
         returnButton.setOnClickListener {
             navigateToActivity(PickerScreenActivity::class.java)
         }
-
-        val submitButton = findViewById<Button>(R.id.control_screen_submit_button)
-        submitButton.setOnClickListener {
-            clearEditFocus()
-            gatherInputs()
-            sendInputs()
-        }
-    }
-
-    private fun sendInputs() {
-        jsonDesiredParams = JSONObject(desiredParamsMap)
-
-        //Checking
-        val jsonString = jsonDesiredParams.toString()
     }
 
     private fun gatherInputs() {
@@ -172,6 +174,8 @@ class ControlPanelActivity : AppCompatActivity() {
         desiredParamsMap["frequency"] = frequencyOutput
         desiredParamsMap["light_intensity"] = lightIntensityOutput
         desiredParamsMap["color"] = selectedColor.hex
+
+        jsonDesiredParams = JSONObject(desiredParamsMap)
     }
 
     private fun clearEditFocus() {
@@ -282,6 +286,7 @@ class ControlPanelActivity : AppCompatActivity() {
         frequencyOutputFiller.text = getString(R.string.reset_frequency)
         lightIntensityOutputFiller.text = getString(R.string.reset_light_intencity)
         colorInputCard.setCardBackgroundColor(resources.getColor(R.color.reset_input_color))
+
     }
 
     private fun resetParams() {
@@ -309,5 +314,21 @@ class ControlPanelActivity : AppCompatActivity() {
         connectedDeviceAddress = null
         connectedDevice = null
         jsonDesiredParams = null;
+    }
+
+    private fun updateReceiveUI(receivedData : JSONObject) {
+        // Распарсить данные из JSON
+        temperatureInput = receivedData.optInt("temperature")
+        humidifyInput = receivedData.optInt("humidity")
+        frequencyInput = receivedData.optInt("frequency")
+        lightIntensityInput = receivedData.optInt("lightIntensity")
+        colorInput = receivedData.optString("color")
+
+        // Заполнить соответствующие поля вашего пользовательского интерфейса
+        temperatureInput?.let { tempOutputFiller.text = it.toString() }
+        humidifyInput?.let { humidifyOutputFiller.text = it.toString() }
+        frequencyInput?.let { frequencyOutputFiller.text = it.toString() }
+        lightIntensityInput?.let { lightIntensityOutputFiller.text = it.toString() }
+        colorInput?.let { colorInputCard.setCardBackgroundColor(Color.parseColor(it)) }
     }
 }
