@@ -40,7 +40,7 @@ class ControlPanelActivity : AppCompatActivity() {
 
     private var connectedDevices: MutableList<BluetoothDevice> = mutableListOf()
 
-        //Communication parameters
+    //Communication parameters
     private val UUID_STRING_WELL_KNOWN : String = "00001101-0000-1000-2000-00805F9B34FB"
     private val WELL_KNOWN_UUID: UUID = UUID.fromString(UUID_STRING_WELL_KNOWN)
     private lateinit var bluetoothSocket: BluetoothSocket
@@ -97,11 +97,9 @@ class ControlPanelActivity : AppCompatActivity() {
 
             when (action) {
                 BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
-                    val device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE) as? BluetoothDevice?
+                    val device =
+                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE) as? BluetoothDevice?
                     if (device?.address == connectedDeviceAddress) {
-                        connectedDeviceAddress = null
-                        connectedDevice = null
-                        // Отключенное устройство - наше целевое устройство, возвращаемся на предыдущий экран
                         navigateToActivity(PickerScreenActivity::class.java)
                     }
                 }
@@ -117,7 +115,6 @@ class ControlPanelActivity : AppCompatActivity() {
         registerReceiver(bluetoothReceiver, filter)
 
         initializeParams()
-        resetParams()
     }
     override fun onStop() {
         super.onStop()
@@ -137,7 +134,8 @@ class ControlPanelActivity : AppCompatActivity() {
         bluetoothAdapter = bluetoothManager.adapter
 
         connectedDevice = getConnectedDevice()
-        Log.i("INFO", "Було отримано пристрій ${connectedDevice?.name} \n з адресом ${connectedDevice?.address}")
+        Log.i("INFO", "Було отримано пристрій ${connectedDevice?.name}" +
+                " \n з адресом ${connectedDevice?.address}")
 
         val returnButton = findViewById<Button>(R.id.control_screen_return_button)
         returnButton.setOnClickListener {
@@ -270,20 +268,6 @@ class ControlPanelActivity : AppCompatActivity() {
         frequencyOutputFiller.text  = getString(R.string.reset_frequency)
         lightIntensityOutputFiller.text  = getString(R.string.reset_light_intencity)
         colorInputCard.setCardBackgroundColor(getResources().getColor(R.color.reset_input_color))
-
-        // Сброс параметров
-        temperatureInput = null
-        humidifyInput = null
-        frequencyInput = null
-        lightIntensityInput = null
-        colorInput = null
-
-        // Сброс выходных параметров
-        temperatureOutput = null
-        humidifyOutput = null
-        frequencyOutput = null
-        lightIntensityOutput = null
-        colorOutput = null
     }
 
     private fun resetParams() {
@@ -301,17 +285,14 @@ class ControlPanelActivity : AppCompatActivity() {
         lightIntensityOutput = null
         colorOutput = null
 
-        tempOutputFiller.text = getString(R.string.current_temp)
-        humidifyOutputFiller.text  = getString(R.string.reset_humidify)
-        frequencyOutputFiller.text  = getString(R.string.reset_frequency)
-        lightIntensityOutputFiller.text  = getString(R.string.reset_light_intencity)
-        colorInputCard.setCardBackgroundColor(resources.getColor(R.color.reset_input_color))
-
         tempInputField.text = null
         humidifyInputField.text = null
         frequencyInputField.text = null
         lightIntensityInputField.text = null
 
         parametersMap.clear()
+
+        connectedDeviceAddress = null
+        connectedDevice = null
     }
 }
