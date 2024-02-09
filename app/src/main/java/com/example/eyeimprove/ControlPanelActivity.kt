@@ -61,7 +61,8 @@ class ControlPanelActivity : AppCompatActivity() {
     private var colorInput: String? = null // null or something
 
     /** Outputs to Device  */
-    private val parametersMap = HashMap<String, Any?>()
+    private val desiredParamsMap = HashMap<String, Any?>()
+    private var jsonDesiredParams : JSONObject? = null
 
     // Views outputs
     private lateinit var tempInputField: EditText
@@ -154,10 +155,10 @@ class ControlPanelActivity : AppCompatActivity() {
     }
 
     private fun sendInputs() {
-        val json = JSONObject(parametersMap)
+        jsonDesiredParams = JSONObject(desiredParamsMap)
 
         //Checking
-        val jsonString = json.toString()
+        val jsonString = jsonDesiredParams.toString()
     }
 
     private fun gatherInputs() {
@@ -166,11 +167,11 @@ class ControlPanelActivity : AppCompatActivity() {
         frequencyOutput = validateAndGatherInput(frequencyInputField, 10, 900) // 10 - 900
         lightIntensityOutput = validateAndGatherInput(lightIntensityInputField, 0, 100) //0 - 1
 
-        parametersMap["temperature"] = temperatureOutput
-        parametersMap["humidify"] = humidifyOutput
-        parametersMap["frequency"] = frequencyOutput
-        parametersMap["light_intensity"] = lightIntensityOutput
-        parametersMap["color"] = selectedColor.hex
+        desiredParamsMap["temperature"] = temperatureOutput
+        desiredParamsMap["humidify"] = humidifyOutput
+        desiredParamsMap["frequency"] = frequencyOutput
+        desiredParamsMap["light_intensity"] = lightIntensityOutput
+        desiredParamsMap["color"] = selectedColor.hex
     }
 
     private fun clearEditFocus() {
@@ -303,9 +304,10 @@ class ControlPanelActivity : AppCompatActivity() {
         frequencyInputField.text = null
         lightIntensityInputField.text = null
 
-        parametersMap.clear()
+        desiredParamsMap.clear()
 
         connectedDeviceAddress = null
         connectedDevice = null
+        jsonDesiredParams = null;
     }
 }
